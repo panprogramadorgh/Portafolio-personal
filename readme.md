@@ -1,1 +1,0 @@
-# proyecto portafolio personal de trabajo
