@@ -1,0 +1,39 @@
+body {
+  height: 100vh;
+  text-align: center;
+  background-color: var(--main-dark-bg);
+  color: #ddd;
+}
+
+.App {
+  width: 100vw;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.App .header {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.App .info-container {
+  position: relative;
+  flex-basis: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  margin-top: 20vh;
+}
+
+.App .skills-container {
+  width: 100%;
+}
+
+.App .info-container .title-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}

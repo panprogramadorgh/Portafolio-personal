@@ -1,0 +1,32 @@
+.TextContainer {
+  background-color: var(--seccondary-dark-bg);
+  border: 0.06em solid #aaa;
+  line-height: 1.65;
+  font-size: 18px;
+  text-align: left;
+  color: #ddd;
+  font-weight: 400;
+  padding: 45px;
+  margin-top: 20px;
+  border-radius: 1em;
+  width: 600px;
+  overflow-y: hidden;
+}
+
+.TextContainer .content {
+  height: 200px;
+  transition: all 0.3s ease-in-out;
+}
+
+.TextContainer .content.deployed {
+  height: 850px;
+}
+
+@keyframes deploy_long_text {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

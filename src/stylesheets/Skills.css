@@ -1,0 +1,8 @@
+.Skills {
+  margin-top: 50px;
+  width: 100%;
+  height: 500px;
+  background-color: var(--seccondary-dark-bg);
+  border: 0.06em solid #aaa;
+  border-radius: 1em;
+}

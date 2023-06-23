@@ -1,0 +1,25 @@
+.TextContainer .button-container .deploy-button {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: #ddd;
+  border: 0.06em solid #ddd;
+  border-radius: 0.2em;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.TextContainer .button-container .deploy-button:hover {
+  background-color: transparent;
+  color: #ddd;
+}
+
+.TextContainer .button-container .deploy-button svg {
+  font-size: 25px;
+  margin-left: 7px;
+  transition: all 0.2s;
+}
+
+.TextContainer .button-container .deploy-button:hover > svg {
+  transform: translate(7px, 0);
+}
