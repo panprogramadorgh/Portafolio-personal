@@ -48,14 +48,17 @@ const TextContainer = () => {
       </p>
     </>
   );
+  const handleButtonClick = () => {
+    setShowTextContainer(!showTextContainer);
+  };
   return (
     <div className="TextContainer">
       <div className={`content ${showTextContainer ? "deployed" : ""}`.trim()}>
         {showTextContainer ? longMessage : shortMessage}
       </div>
       <div className="button-container">
-        <Button callback={() => setShowTextContainer(!showTextContainer)}>
-          {showTextContainer ? "Show less" : "Show more"}
+        <Button callback={handleButtonClick}>
+          {showTextContainer ? "All right" : "More about me"}
           <VscArrowRight />
         </Button>
       </div>

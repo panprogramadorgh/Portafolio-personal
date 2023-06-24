@@ -7,7 +7,7 @@ interface Props {
 }
 const Button = ({ callback, children }: Props) => {
   return (
-    <button className="deploy-button" onClick={callback}>
+    <button className="Button" onClick={callback}>
       {children}
     </button>
   );

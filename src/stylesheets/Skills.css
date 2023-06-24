@@ -5,4 +5,5 @@
   background-color: var(--seccondary-dark-bg);
   border: 0.06em solid #aaa;
   border-radius: 1em;
+  box-shadow: 0 0 35px 3px #0006;
 }

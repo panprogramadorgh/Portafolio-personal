@@ -1,6 +1,7 @@
+import Contact from "./components/Contact";
 import Title from "./components/Title";
-import UserCard from "./components/UserCard";
 import TextContainer from "./components/TextContainer";
+import SkillsTitle from "./components/SkillsTitle";
 import Skills from "./components/Skills";
 import TextContainerContextProvider from "./contexts/TextContainer.context";
 import "./App.css";
@@ -13,15 +14,22 @@ function App() {
           <TextContainerContextProvider>
             <div className="title-container">
               <Title />
-              <UserCard />
+              <Contact />
             </div>
             <TextContainer />
           </TextContainerContextProvider>
         </div>
-        <div className="skills-container">
-          <Skills />
-        </div>
       </header>
+      <main className="main">
+        <article className="skills">
+          <section className="skills-title-container">
+            <SkillsTitle />
+          </section>
+          <section className="skills-container">
+            <Skills />
+          </section>
+        </article>
+      </main>
     </div>
   );
 }

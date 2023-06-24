@@ -11,6 +11,7 @@
   border-radius: 1em;
   width: 600px;
   overflow-y: hidden;
+  box-shadow: 0 0 35px 3px #0006;
 }
 
 .TextContainer .content {

@@ -2,6 +2,10 @@ body {
   height: 100vh;
   text-align: center;
   background-color: var(--main-dark-bg);
+  background-image: url("../public/imgs/bg-img1.png");
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-size: contain;
   color: #ddd;
 }
 
@@ -35,5 +39,13 @@ body {
 .App .info-container .title-container {
   display: flex;
   flex-flow: column;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.App .info-container .title-container .contact {
+  padding-top: 50px;
+}
+
+.App .info-container .title-container .contact-button-container {
+  padding-top: 50px;
 }
