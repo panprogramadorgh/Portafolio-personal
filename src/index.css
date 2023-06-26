@@ -2,10 +2,9 @@
 
 :root {
   --main-blue: #09f;
-  --main-dark-bg: #191c20;
-  /* --seccondary-dark-bg: #24272c; */
-  --seccondary-dark-bg: #262a33;
-
+  /* --main-dark-bg: #191c20; */
+  --main-dark-bg: #101215;
+  --bg-card-color: #ffffff09;
 }
 
 * {
@@ -16,5 +15,9 @@
 }
 
 html {
-  overflow-x: hidden;
+  font-size: 18px;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

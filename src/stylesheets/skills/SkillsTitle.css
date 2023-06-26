@@ -1,0 +1,12 @@
+.SkillsTitle {
+  padding: 25px;
+}
+
+.SkillsTitle .title {
+  font-size: 55px;
+}
+
+.SkillsTitle .title .skill-word {
+  font-size: 70px;
+  color: var(--main-blue);
+}

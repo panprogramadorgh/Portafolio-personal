@@ -1,0 +1,44 @@
+.Title {
+  width: 720px;
+  display: inline-flex;
+  text-align: start;
+  flex-flow: column;
+  padding: 30px;
+  font-size: 65px;
+  font-weight: 800;
+}
+
+.Title .static-message-container h1 {
+  font-size: 3.3rem;
+}
+
+.Title .dynamic-message-container h1 {
+  font-size: 2.2rem;
+}
+
+.Title .dynamic-message-container h1 .aptitude,
+.Title .static-message-container h1 .name {
+  color: var(--main-blue);
+}
+
+@keyframes fadein_aptitude {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout_aptitude {
+  from {
+    opacity: 1;
+    position: relative;
+    top: 0;
+  }
+  to {
+    opacity: 0;
+    position: relative;
+    top: 10px;
+  }
+}

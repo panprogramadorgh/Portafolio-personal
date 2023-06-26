@@ -1,0 +1,12 @@
+.ProjectsTitle {
+  padding-bottom: 50px;
+}
+
+.ProjectsTitle .title {
+  font-size: 55px;
+}
+
+.ProjectsTitle .title .projects-word {
+  color: var(--main-blue);
+  font-size: 70px;
+}

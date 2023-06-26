@@ -1,0 +1,31 @@
+.GhLinkButton {
+  width: 157px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-weight: 600;
+  font-size: 18px;
+  text-decoration: none;
+  color: #222;
+  color: #ddd;
+  border: 0.06em solid #ddd;
+  background-color: none;
+  padding: 5px 12px;
+  border-radius: 0.2rem;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.GhLinkButton:hover {
+  background-color: #ddd;
+  color: #222;
+}
+
+.GhLinkButton svg {
+  font-size: 22px;
+  transition: all 0.2s;
+}
+
+.GhLinkButton:hover > svg.arrow {
+  transform: translate(7px, 0);
+}
