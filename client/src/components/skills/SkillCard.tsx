@@ -30,22 +30,19 @@ const SkillCard = ({ data }: SkillCardProps) => {
       className={`SkillCard ${data.level === "advanced" ? "gold" : ""}`.trim()}
       onClick={handleClick}
     >
-      <p className="skillname">
+      <div className="skillname">
         Name <AiOutlineLine />{" "}
         <div className="skillname-logo">
-          <img
-            src={skillImages[data.imageLogo]}
-            alt="skillname-logo image"
-          />
+          <img src={skillImages[data.imageLogo]} alt="skillname-logo image" />
           {data.skillname}
         </div>
-      </p>
-      <p className="level">
+      </div>
+      <div className="level">
         Level <AiOutlineLine />{" "}
         <span style={{ color: possibleLevelColors[data.level] }}>
           {data.level}
         </span>
-      </p>
+      </div>
     </Card>
   );
 };
