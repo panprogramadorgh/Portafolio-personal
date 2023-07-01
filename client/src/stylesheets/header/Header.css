@@ -1,0 +1,31 @@
+.Header {
+  padding: 0 100px;
+  margin: 200px 0;
+  width: 100vw;
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.Header .info-container {
+  position: relative;
+  width: 100%;
+  flex-basis: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.Header .info-container .title-container {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  /* margin-bottom: 100px; */
+}
+
+.Header .info-container .title-container .gh-button-container {
+  width: 720px;
+  padding-left: 30px;
+}

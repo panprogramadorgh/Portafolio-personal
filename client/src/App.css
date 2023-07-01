@@ -1,0 +1,118 @@
+body {
+  height: 100vh;
+  text-align: center;
+  background-color: var(--main-dark-bg);
+  background-image: url("imgs/bg-imgs/light-lines.png");
+  background-repeat: repeat;
+  background-position: -150px 0;
+  background-size: 30rem;
+  background-attachment: fixed;
+  color: #ddd;
+  overflow-x: hidden;
+}
+
+.App {
+  width: 100vw;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.App .main {
+  width: 100vw;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1570px) {
+  .Header .info-container .title-container {
+    min-width: 100vw;
+    align-items: center;
+    margin-bottom: 100px;
+  }
+
+  .Header .info-container .title-container .Contact {
+    padding-left: 0;
+  }
+
+  .Header {
+    padding: 0;
+    margin-top: 50px;
+  }
+
+  .Skills {
+    padding: 100px 150px;
+    margin-top: 200px;
+  }
+  .App .main .view-skills-button-container {
+    padding-top: 100px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .Title .static-message-container h1 {
+    font-size: 33px;
+  }
+  .Title .dynamic-message-container h1 {
+    font-size: 19px;
+  }
+
+  .Header .info-container .title-container {
+    margin-bottom: 35px;
+  }
+
+  .Header .info-container .title-container .Title,
+  .Header .info-container .title-container .gh-button-container {
+    width: 100vw;
+  }
+
+  .TextContainer {
+    width: 100vw;
+    border-radius: 0;
+    background-color: transparent;
+    border: none;
+    backdrop-filter: none;
+  }
+  .Contact {
+    padding-top: 150px;
+    width: 100vw;
+  }
+
+  .Contact .container {
+    border-radius: 0;
+  }
+  .Skills {
+    padding: 0 30px;
+  }
+  .Skills .skills-cards-container {
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .Skills .skills-cards-container .SkillCard {
+    width: 100%;
+    flex-basis: 100px;
+  }
+
+  .Skills .skills-cards-container .SkillCard .level,
+  .Skills .skills-cards-container .SkillCard .name {
+    justify-content: space-evenly;
+  }
+
+  .Projects {
+    padding: 100px 30px;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translate(0, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+

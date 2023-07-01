@@ -1,0 +1,37 @@
+.SkillCard {
+  flex-basis: 320px;/
+}
+
+.SkillCard.gold {
+  background-color: rgba(239, 195, 20, 0.03);
+}
+
+.SkillCard.gold:hover {
+  background-color: rgba(239, 195, 20, 0.06);
+}
+
+.SkillCard .image {
+  width: 20px;
+}
+
+.SkillCard .skillname,
+.level {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.SkillCard .skillname svg,
+.level svg {
+  font-size: 30px;
+}
+
+.SkillCard .skillname .skillname-logo {
+  display: flex;
+  align-items: center;
+}
+
+.SkillCard .skillname .skillname-logo img {
+  padding-right: 5px;
+  width: 27px;
+}
