@@ -2,7 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import cors from "cors";
-import indexRouter from "./routers/index.router";
+import indexRouter from "./routers/index.router.js";
+
 const app = express();
 app.use(
   cors({
@@ -10,6 +11,7 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
-app.use("/", indexRouter);
+app.use("/api", express.static("./public"));
+app.use("/api", indexRouter);
 
 export default app;

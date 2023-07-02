@@ -3,11 +3,10 @@ dotenv.config();
 import { connect } from "mongoose";
 
 export default async function () {
-  const connectionString = process.env.URI as
-    | string
-    | "mongodb://127.0.0.1:27017/portafolio";
+  const connectionString = process.env.URI;
   try {
     connect(connectionString);
+    console.log('>>> Connected to database.')
   } catch (error) {
     console.error(error);
   }

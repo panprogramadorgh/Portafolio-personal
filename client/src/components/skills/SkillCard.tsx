@@ -1,4 +1,4 @@
-import skillImages from "../../data/skills/skillImages";
+import { useState, useEffect } from "react";
 import Card from "../generic/Card";
 import { AiOutlineLine } from "react-icons/ai";
 import "../../stylesheets/skills/SkillCard.css";
@@ -13,6 +13,14 @@ export interface SkillCardProps {
 }
 
 const SkillCard = ({ data }: SkillCardProps) => {
+  const [img, setImg] = useState<null | Response>(null);
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/imgs/skills/${data.imageLogo}.png`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.error(error));
+  }, []);
   const possibleLevelColors = {
     advanced: "#f2d40f",
     medium: "#bf4ff7",
@@ -33,7 +41,7 @@ const SkillCard = ({ data }: SkillCardProps) => {
       <div className="skillname">
         Name <AiOutlineLine />{" "}
         <div className="skillname-logo">
-          <img src={skillImages[data.imageLogo]} alt="skillname-logo image" />
+          {/* <img src={img} alt="skillname-logo image" /> */}
           {data.skillname}
         </div>
       </div>

@@ -1,9 +1,9 @@
-import Skill from "../models/skill.model";
-import Project from "../models/project.model";
+import Skill from "../models/skill.model.js";
+import Project from "../models/project.model.js";
 import { Router } from "express";
 const indexRouter = Router();
 
-indexRouter.get("/api/skills", async (req, res) => {
+indexRouter.get("/skills", async (req, res) => {
   try {
     const skills = await Skill.find();
     res.status(200).json(skills);
@@ -12,7 +12,7 @@ indexRouter.get("/api/skills", async (req, res) => {
   }
 });
 
-indexRouter.get("/api/projects", async (req, res) => {
+indexRouter.get("/projects", async (req, res) => {
   try {
     const projects = await Project.find();
     res.status(200).json(projects);
