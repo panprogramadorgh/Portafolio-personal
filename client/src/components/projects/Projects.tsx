@@ -19,16 +19,20 @@ const Projects = () => {
       .catch((error) => console.error(error));
   }, []);
 
+  let projectsContainerContent;
+  if (projectsData === null) projectsContainerContent = "fetching projects...";
+  else if (projectsData.length === 0) {
+    projectsContainerContent = "There is projects yet :[";
+  } else {
+    projectsContainerContent = projectsData.map(({ data }, index) => (
+      <ProjectCard key={index} data={data} />
+    ));
+  }
+
   return (
     <div className="Projects" style={{ animation, opacity: visible ? 1 : 0 }}>
       <ProjectsTitle />
-      <div className="projects-container">
-        {projectsData
-          ? (projectsData as ProjectCardProps[]).map(({ data }, index) => (
-              <ProjectCard key={index} data={data} />
-            ))
-          : "fetching projects..."}
-      </div>
+      <div className="projects-container">{projectsContainerContent}</div>
     </div>
   );
 };

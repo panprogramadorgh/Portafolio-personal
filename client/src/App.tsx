@@ -1,3 +1,4 @@
+import Title from "./components/generic/Title";
 import Header from "./components/header/Header";
 import Projects from "./components/projects/Projects";
 import Skills from "./components/skills/Skills";
@@ -11,6 +12,7 @@ function App() {
         <Skills />
         <Projects />
       </main>
+      {/* <Title messsage="hello world que tal" relevantWorld="world" /> */}
     </div>
   );
 }

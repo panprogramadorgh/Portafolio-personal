@@ -1,0 +1,16 @@
+.Title {
+  padding: 25px;
+}
+
+.Title * {
+  display: inline-block;
+}
+
+.Title .title {
+  font-size: 55px;
+}
+
+.Title .relevant-word {
+  font-size: 70px;
+  color: var(--main-blue);
+}

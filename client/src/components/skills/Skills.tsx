@@ -18,17 +18,23 @@ const Skills = () => {
       .catch((error) => console.error(error));
   }, []);
 
+  let skillsCardContainerContent;
+  if (skillsData === null) skillsCardContainerContent = "fetching skills...";
+  else if (skillsData.length === 0)
+    skillsCardContainerContent = "There is no skills :[";
+  else {
+    skillsCardContainerContent = skillsData.map(({ data }, index) => {
+      return <SkillCard key={index} data={data} />;
+    });
+  }
+
   return (
     <article className="Skills" style={{ animation, opacity: visible ? 1 : 0 }}>
       <section className="skills-title-container">
         <SkillsTitle />
       </section>
       <section className="skills-cards-container">
-        {skillsData
-          ? (skillsData as SkillCardProps[]).map(({ data }, index) => {
-              return <SkillCard key={index} data={data} />;
-            })
-          : "fetching skills..."}
+        {skillsCardContainerContent}
       </section>
     </article>
   );
