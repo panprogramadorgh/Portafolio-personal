@@ -8,6 +8,7 @@
   user-select: none;
   transition: all 0.2s;
   cursor: pointer;
+  font-size: 0.8rem;
 }
 
 .Button:hover {

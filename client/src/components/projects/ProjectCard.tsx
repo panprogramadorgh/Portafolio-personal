@@ -14,10 +14,12 @@ const ProjectCard = ({ data }: ProjectCardProps) => {
     window.open(data.url, "_BLANK");
   };
   return (
-    <Card type="text" className="ProjectCard" onClick={handleClick}>
+    <Card type="card" className="ProjectCard" onClick={handleClick}>
       <div
         className="image-container"
-        style={{ backgroundImage: `url(${data.image})` }}
+        style={{
+          backgroundImage: `url('http://localhost:3000/api/imgs/projects/${data.image}')`,
+        }}
       ></div>
       <div className="text-container">
         <b className="title">{data.title}</b>

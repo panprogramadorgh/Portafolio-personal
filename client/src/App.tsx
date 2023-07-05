@@ -1,4 +1,4 @@
-import Title from "./components/generic/Title";
+import Contact from "./components/contact/Contact";
 import Header from "./components/header/Header";
 import Projects from "./components/projects/Projects";
 import Skills from "./components/skills/Skills";
@@ -11,8 +11,8 @@ function App() {
       <main className="main">
         <Skills />
         <Projects />
+        <Contact />
       </main>
-      {/* <Title messsage="hello world que tal" relevantWorld="world" /> */}
     </div>
   );
 }

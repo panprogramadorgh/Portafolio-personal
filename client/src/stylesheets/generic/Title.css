@@ -1,12 +1,5 @@
 .Title {
   padding: 25px;
-}
-
-.Title * {
-  display: inline-block;
-}
-
-.Title .title {
   font-size: 55px;
 }
 

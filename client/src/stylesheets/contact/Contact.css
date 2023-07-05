@@ -1,0 +1,32 @@
+.Contact .Card {
+  padding: 100px;
+}
+
+.Contact .Card input,
+textarea {
+  background-color: transparent;
+  color: #fff;
+  font-size: 1.3rem;
+  width: 100%;
+  border: 0.06rem solid #2e2e2e;
+  padding: 15px 25px;
+  outline: none;
+  margin: 10px 0;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.Contact .Card input:focus,
+textarea:focus {
+  border-color: #444;
+  background-color: #ffffff03;
+}
+
+.Contact .Card textarea {
+  resize: none;
+  height: 300px;
+}
+
+.Contact .Card .Button {
+  margin-top: 50px;
+}

@@ -1,9 +1,3 @@
-.Projects {
-  width: 100vw;
-  padding: 0 200px;
-  margin: 150px 0;
-}
-
 .Projects .projects-container {
   width: 100%;
   display: flex;

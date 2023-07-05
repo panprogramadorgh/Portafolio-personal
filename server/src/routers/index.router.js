@@ -23,16 +23,17 @@ indexRouter.get("/projects", async (req, res) => {
 });
 
 indexRouter.post("/contact", async (req, res) => {
-  console.log(req.body);
   const contactRequest = new Contact(req.body);
   try {
     await contactRequest.save();
     res.status(200).json({
       message: "New contact request added.",
+      status: 200,
     });
   } catch (error) {
     res.status(500).json({
-      error: "Failed to post new contact request.",
+      message: error.message,
+      status: 500,
     });
   }
 });

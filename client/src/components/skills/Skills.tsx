@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
-import useComponentFadeinAnimation from "../../hooks/useComponentFadeinAnimation";
-import SkillsTitle from "./SkillsTitle";
+import Title from "../generic/Title";
+import PageSection from "../generic/PageSection";
 import SkillCard, { SkillCardProps } from "./SkillCard";
-// import skillsData from "../../data/skills/skillsData.json";
 import "../../stylesheets/skills/Skills.css";
 
 const Skills = () => {
-  const { animation, visible } = useComponentFadeinAnimation({
-    targetElementQuery: ".Skills",
-  });
   const [skillsData, setSkillsData] = useState<SkillCardProps[] | null>(null);
 
   useEffect(() => {
@@ -29,14 +25,14 @@ const Skills = () => {
   }
 
   return (
-    <article className="Skills" style={{ animation, opacity: visible ? 1 : 0 }}>
+    <PageSection className="Skills">
       <section className="skills-title-container">
-        <SkillsTitle />
+        <Title message="This are some of my skills" relevantWord="skills" />
       </section>
       <section className="skills-cards-container">
         {skillsCardContainerContent}
       </section>
-    </article>
+    </PageSection>
   );
 };
 

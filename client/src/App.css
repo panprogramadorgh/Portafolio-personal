@@ -31,30 +31,17 @@ body {
     align-items: center;
     margin-bottom: 100px;
   }
-
-  .Header .info-container .title-container .Contact {
-    padding-left: 0;
-  }
-
   .Header {
     padding: 0;
     margin-top: 50px;
   }
-
-  .Skills {
-    padding: 100px 150px;
-    margin-top: 200px;
-  }
-  .App .main .view-skills-button-container {
-    padding-top: 100px;
-  }
 }
 
 @media only screen and (max-width: 700px) {
-  .Title .static-message-container h1 {
+  .HeaderTitle .static-message-container h1 {
     font-size: 33px;
   }
-  .Title .dynamic-message-container h1 {
+  .HeaderTitle .dynamic-message-container h1 {
     font-size: 19px;
   }
 
@@ -62,29 +49,15 @@ body {
     margin-bottom: 35px;
   }
 
-  .Header .info-container .title-container .Title,
+  .HeaderTitle,
   .Header .info-container .title-container .gh-button-container {
     width: 100vw;
   }
 
-  .TextContainer {
-    width: 100vw;
-    border-radius: 0;
-    background-color: transparent;
-    border: none;
-    backdrop-filter: none;
-  }
-  .Contact {
-    padding-top: 150px;
-    width: 100vw;
+  .PageSection {
+    padding: 100px 10px;
   }
 
-  .Contact .container {
-    border-radius: 0;
-  }
-  .Skills {
-    padding: 0 30px;
-  }
   .Skills .skills-cards-container {
     flex-flow: column;
     align-items: center;
@@ -100,8 +73,9 @@ body {
     justify-content: space-evenly;
   }
 
-  .Projects {
-    padding: 100px 30px;
+  .Contact .Card {
+    padding: 50px;
+    margin: 0;
   }
 }
 
@@ -115,4 +89,3 @@ body {
     transform: translate(0, 0);
   }
 }
-

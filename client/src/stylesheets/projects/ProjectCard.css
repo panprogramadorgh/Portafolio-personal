@@ -1,4 +1,5 @@
 .ProjectCard {
+  padding: 0;
   margin: 10px;
   background-color: var(--bg-card-color);
   backdrop-filter: blur(4px);
@@ -12,7 +13,7 @@
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   background-size: contain;
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat; */
 }
 
 .ProjectCard .text-container {

@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
-import useComponentFadeinAnimation from "../../hooks/useComponentFadeinAnimation";
-import ProjectsTitle from "./ProjectsTitle";
+import Title from "../generic/Title";
+import PageSection from "../generic/PageSection";
 import ProjectCard, { ProjectCardProps } from "./ProjectCard";
 import "../../stylesheets/projects/Projects.css";
 
 const Projects = () => {
-  const { animation, visible } = useComponentFadeinAnimation({
-    targetElementQuery: ".Projects",
-  });
   const [projectsData, setProjectData] = useState<ProjectCardProps[] | null>(
     null
   );
@@ -30,10 +27,10 @@ const Projects = () => {
   }
 
   return (
-    <div className="Projects" style={{ animation, opacity: visible ? 1 : 0 }}>
-      <ProjectsTitle />
+    <PageSection className="Projects">
+      <Title message="Here some of my projects" relevantWord="projects" />
       <div className="projects-container">{projectsContainerContent}</div>
-    </div>
+    </PageSection>
   );
 };
 

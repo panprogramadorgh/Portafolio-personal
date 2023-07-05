@@ -18,11 +18,21 @@
   align-items: center;
 }
 
+.Header .info-container .Card {
+  padding: 45px;
+  text-align: left;
+  width: 650px;
+  overflow-y: hidden;
+}
+
+.Header .info-container .Card .Button {
+  margin-top: 35px;
+}
+
 .Header .info-container .title-container {
   display: flex;
   flex-flow: column;
   align-items: flex-start;
-  /* margin-bottom: 100px; */
 }
 
 .Header .info-container .title-container .gh-button-container {

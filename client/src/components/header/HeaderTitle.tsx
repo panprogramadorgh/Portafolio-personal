@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import "../../stylesheets/header/Title.css";
+import "../../stylesheets/header/HeaderTitle.css";
 
-const Title = () => {
+const HeaderTitle = () => {
   const timeToChangeAptitude = 3000;
   const aptitudes = [
     "a full-stack developer.",
@@ -28,7 +28,7 @@ const Title = () => {
   }, [currentAptidude]);
 
   return (
-    <div className="Title">
+    <div className="HeaderTitle">
       <div className="static-message-container">
         <h1>Hi there!</h1>
         <h1>
@@ -52,4 +52,4 @@ const Title = () => {
   );
 };
 
-export default Title;
+export default HeaderTitle;

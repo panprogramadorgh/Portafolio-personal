@@ -1,4 +1,4 @@
-.Title {
+.HeaderTitle {
   width: 720px;
   display: inline-flex;
   text-align: start;
@@ -8,16 +8,16 @@
   font-weight: 800;
 }
 
-.Title .static-message-container h1 {
+.HeaderTitle .static-message-container h1 {
   font-size: 3.3rem;
 }
 
-.Title .dynamic-message-container h1 {
+.HeaderTitle .dynamic-message-container h1 {
   font-size: 2.2rem;
 }
 
-.Title .dynamic-message-container h1 .aptitude,
-.Title .static-message-container h1 .name {
+.HeaderTitle .dynamic-message-container h1 .aptitude,
+.HeaderTitle .static-message-container h1 .name {
   color: var(--main-blue);
 }
 
