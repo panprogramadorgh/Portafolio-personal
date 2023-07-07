@@ -3,7 +3,6 @@ import GhLinkButton from "../generic/GhLinkButton";
 import HeaderTitle from "./HeaderTitle";
 import Card from "../generic/Card";
 import Button from "../generic/Button";
-// import TextContainer from "./TextContainer";
 import "../../stylesheets/header/Header.css";
 
 const Header = () => {

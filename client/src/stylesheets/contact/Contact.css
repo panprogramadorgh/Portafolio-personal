@@ -1,12 +1,42 @@
+.Contact {
+  align-items: center;
+}
+
+.Contact .Card.window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: left;
+  width: auto;
+  padding: 20px;
+  margin: 20px;
+  animation: fadein 0.2s ease-in-out;
+}
+
+.Contact .Card.window span {
+  display: block;
+}
+
+.Contact .Card.window.contact-request-sended {
+  background-color: #0099ff20;
+  border-color: #0099ff80;
+}
+
+.Contact .Card.window.contact-request-failed {
+  background-color: #ff000010;
+  border-color: #ff000050;
+}
+
 .Contact .Card {
-  padding: 100px;
+  max-width: 800px;
+  padding: 50px;
 }
 
 .Contact .Card input,
 textarea {
   background-color: transparent;
   color: #fff;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
   width: 100%;
   border: 0.06rem solid #2e2e2e;
   padding: 15px 25px;
@@ -18,8 +48,9 @@ textarea {
 
 .Contact .Card input:focus,
 textarea:focus {
-  border-color: #444;
-  background-color: #ffffff03;
+  border-color: #09e;
+  background-color: #22bbff15;
+  box-shadow: 0 0 100px 0px #0099ee30;
 }
 
 .Contact .Card textarea {
@@ -27,6 +58,25 @@ textarea:focus {
   height: 300px;
 }
 
+.Contact .Card textarea::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.Contact .Card textarea::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+}
+
 .Contact .Card .Button {
-  margin-top: 50px;
+  margin: 10px 0;
+}
+
+@keyframes fadeout-card {
+  from {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-200px, 0);
+  }
 }

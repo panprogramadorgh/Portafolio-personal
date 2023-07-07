@@ -6,8 +6,9 @@ interface Props {
   className?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
   type: "text" | "card";
+  animation?: `${string} ${number}s ${string}`;
 }
-const Card = ({ children, className, onClick, type }: Props) => {
+const Card = ({ children, className, onClick, type, animation }: Props) => {
   return (
     <div
       onClick={onClick}
@@ -15,6 +16,7 @@ const Card = ({ children, className, onClick, type }: Props) => {
       style={{
         cursor: type === "card" ? "pointer" : "default",
         userSelect: type === "card" ? "none" : "auto",
+        animation: animation ? animation : "",
       }}
     >
       {children}

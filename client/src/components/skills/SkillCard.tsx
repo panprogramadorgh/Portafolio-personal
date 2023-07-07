@@ -1,5 +1,7 @@
 import Card from "../generic/Card";
 import { AiOutlineLine } from "react-icons/ai";
+import { VscArrowRight } from "react-icons/vsc";
+
 import "../../stylesheets/skills/SkillCard.css";
 
 export interface SkillCardProps {
@@ -14,9 +16,9 @@ export interface SkillCardProps {
 const SkillCard = ({ data }: SkillCardProps) => {
   const imgPath = `http://localhost:3000/api/imgs/skills/${data.imageLogo}.png`;
   const possibleLevelColors = {
-    advanced: "#f2d40f",
+    advanced: "#09f",
     medium: "#bf4ff7",
-    begginer: "#09f",
+    begginer: "#ddd",
   };
   const handleClick = () => {
     if (data.onClickUrl) {
@@ -27,18 +29,24 @@ const SkillCard = ({ data }: SkillCardProps) => {
   return (
     <Card
       type="card"
-      className={`SkillCard ${data.level === "advanced" ? "gold" : ""}`.trim()}
+      className={`SkillCard ${
+        data.level === "advanced"
+          ? "gold"
+          : data.level === "medium"
+          ? "medium"
+          : ""
+      }`.trim()}
       onClick={handleClick}
     >
       <div className="skillname">
-        Name <AiOutlineLine />{" "}
+        Name <VscArrowRight />{" "}
         <div className="skillname-logo">
           <img src={imgPath} alt="skillname-logo image" />
           {data.skillname}
         </div>
       </div>
       <div className="level">
-        Level <AiOutlineLine />{" "}
+        Level <VscArrowRight />{" "}
         <span style={{ color: possibleLevelColors[data.level] }}>
           {data.level}
         </span>

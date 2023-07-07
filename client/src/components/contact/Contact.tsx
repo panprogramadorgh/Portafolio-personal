@@ -1,4 +1,4 @@
-import { useState, ChangeEventHandler } from "react";
+import { useState, ChangeEventHandler, ReactNode } from "react";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import Card from "../generic/Card";
@@ -17,7 +17,9 @@ const Contact = () => {
     message: "",
   });
 
-  /* Cargar componente de targeta dependiendo de showWindow.states */
+  const [windowFadeoutAnimation, setWindowFadeoutAnimation] =
+    useState<boolean>(false);
+
   const enum ShowWindowState {
     contactRequestSended,
     contactRequestFailed,
@@ -25,28 +27,32 @@ const Contact = () => {
   }
   interface ShowWindow {
     state: ShowWindowState;
-    message?: string;
+    message?: ReactNode;
   }
   const [showWindow, setShowWindow] = useState<ShowWindow>({
     state: ShowWindowState.hiddenWindow,
   });
 
-  const updateShowWindowState = (
-    { state, message }: ShowWindow,
-    revertStateTime: number
-  ) => {
+  const updateShowWindowState = async ({ state, message }: ShowWindow) => {
     setShowWindow({
       state,
       message,
     });
-    setTimeout(() => {
-      setShowWindow({
-        state: ShowWindowState.hiddenWindow,
-      });
-    }, revertStateTime);
+    await new Promise((resolve) => {
+      setTimeout(resolve, 5000);
+    });
+    setWindowFadeoutAnimation(true);
+    await new Promise((resolve) => {
+      setTimeout(resolve, 150);
+    });
+    setShowWindow({
+      state: ShowWindowState.hiddenWindow,
+    });
+    setWindowFadeoutAnimation(false);
   };
 
   const handleButtonClick = () => {
+    if (showWindow.state !== ShowWindowState.hiddenWindow) return;
     const trimmedInputs = Object.fromEntries(
       Object.entries({ ...inputs }).map(([key, value]) => {
         return [key, value.trim()];
@@ -60,15 +66,17 @@ const Contact = () => {
       body: JSON.stringify(trimmedInputs),
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then((data: { status: number; message: string }) => {
         if (data.status === 500) {
-          updateShowWindowState(
-            {
-              state: ShowWindowState.contactRequestFailed,
-              message: "Parece que algo salio mal.",
-            },
-            2000
-          );
+          updateShowWindowState({
+            state: ShowWindowState.contactRequestFailed,
+            message: (
+              <>
+                Something seems to be wrong !
+                <span>* Invalid email or empty fields</span>
+              </>
+            ),
+          });
           return;
         }
         const { name, email, message } = Object.fromEntries(
@@ -81,13 +89,10 @@ const Contact = () => {
           email,
           message,
         });
-        updateShowWindowState(
-          {
-            state: ShowWindowState.contactRequestSended,
-            message: "Solicitud de contacto enviada.",
-          },
-          2000
-        );
+        updateShowWindowState({
+          state: ShowWindowState.contactRequestSended,
+          message: <>{data.message}</>,
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -103,25 +108,43 @@ const Contact = () => {
 
   return (
     <PageSection className="Contact">
+      {showWindow.state !== ShowWindowState.hiddenWindow ? (
+        <Card
+          animation={
+            windowFadeoutAnimation ? "fadeout-card 0.2s ease-in-out" : undefined
+          }
+          type="card"
+          className={`window ${
+            showWindow.state === ShowWindowState.contactRequestSended
+              ? "contact-request-sended"
+              : "contact-request-failed"
+          }`.trim()}
+        >
+          {showWindow.message}
+        </Card>
+      ) : null}
       <Title message="Here you can contact me" relevantWord="contact" />
       <Card type="text">
         <input
           onChange={handleInputChange}
+          value={inputs["name"]}
           id="name"
           type="text"
-          placeholder="Name"
+          placeholder="What's your name ?"
         />
         <input
           onChange={handleInputChange}
+          value={inputs["email"]}
           id="email"
           type="email"
-          placeholder="Email"
+          placeholder="What about your email ?"
         />
         <textarea
           onChange={handleInputChange}
-          maxLength={500}
+          value={inputs["message"]}
+          maxLength={1000}
           id="message"
-          placeholder="Message (max 500 chars)"
+          placeholder="Here write a message (max 1000 chars)"
         ></textarea>
         <Button hasArrow callback={handleButtonClick}>
           Send Contact Request

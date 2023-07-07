@@ -27,7 +27,7 @@ indexRouter.post("/contact", async (req, res) => {
   try {
     await contactRequest.save();
     res.status(200).json({
-      message: "New contact request added.",
+      message: "New contact request sended !",
       status: 200,
     });
   } catch (error) {

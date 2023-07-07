@@ -1,13 +1,26 @@
 .SkillCard {
-  flex-basis: 320px;/
+  flex-basis: 320px;
+  transition: all 0.2s, border 0.5s, background 1s;
 }
 
 .SkillCard.gold {
-  background-color: rgba(239, 195, 20, 0.03);
+  border-color: #09f5;
+  background-color: #0099ff08;
 }
 
 .SkillCard.gold:hover {
-  background-color: rgba(239, 195, 20, 0.06);
+  border-color: #09f;
+  background-color: #0099ff1a;
+  box-shadow: 0 0 100px 0px #0099ee30;
+}
+
+.SkillCard.medium {
+  border-color: #bf4ff770;
+  background-color: transparent;
+}
+
+.SkillCard.medium:hover {
+  border-color: #bf4ff7f0;
 }
 
 .SkillCard .image {
@@ -23,7 +36,7 @@
 
 .SkillCard .skillname svg,
 .level svg {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .SkillCard .skillname .skillname-logo {

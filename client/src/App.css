@@ -25,7 +25,7 @@ body {
   align-items: center;
 }
 
-@media only screen and (max-width: 1570px) {
+@media only screen and (max-width: 1590px) {
   .Header .info-container .title-container {
     min-width: 100vw;
     align-items: center;
@@ -34,6 +34,12 @@ body {
   .Header {
     padding: 0;
     margin-top: 50px;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  .PageSection {
+    padding: 100px 10px;
   }
 }
 
@@ -54,10 +60,6 @@ body {
     width: 100vw;
   }
 
-  .PageSection {
-    padding: 100px 10px;
-  }
-
   .Skills .skills-cards-container {
     flex-flow: column;
     align-items: center;
@@ -69,13 +71,9 @@ body {
   }
 
   .Skills .skills-cards-container .SkillCard .level,
-  .Skills .skills-cards-container .SkillCard .name {
-    justify-content: space-evenly;
-  }
-
-  .Contact .Card {
-    padding: 50px;
-    margin: 0;
+  .Skills .skills-cards-container .SkillCard .skillname {
+    justify-content: space-between;
+    padding: 0 20px;
   }
 }
 

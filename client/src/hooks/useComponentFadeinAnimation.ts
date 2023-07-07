@@ -8,7 +8,7 @@ const useComponentFadeinAnimation = ({
 }: Props) => {
   const [animation, setAnimation] = useState<string>("none");
   const [visible, setVisible] = useState<boolean>(false);
-  const fadeinAnimation = 'fadein 0.5s ease-in-out';
+  const fadeinAnimation = 'fadein 1s ease-in-out';
   const animationTime =
     Number(
       fadeinAnimation
