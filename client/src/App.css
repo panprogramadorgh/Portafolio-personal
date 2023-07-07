@@ -1,0 +1,89 @@
+body {
+  height: 100vh;
+  text-align: center;
+  background-color: var(--main-dark-bg);
+  background-image: url("imgs/bg-imgs/light-lines.png");
+  background-repeat: repeat;
+  background-position: -150px 0;
+  background-size: 30rem;
+  background-attachment: fixed;
+  color: #ddd;
+  overflow-x: hidden;
+}
+
+.App {
+  width: 100vw;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.App .main {
+  width: 100vw;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1590px) {
+  .Header .info-container .title-container {
+    min-width: 100vw;
+    align-items: center;
+    margin-bottom: 100px;
+  }
+  .Header {
+    padding: 0;
+    margin-top: 50px;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  .PageSection {
+    padding: 100px 10px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .HeaderTitle .static-message-container h1 {
+    font-size: 33px;
+  }
+  .HeaderTitle .dynamic-message-container h1 {
+    font-size: 19px;
+  }
+
+  .Header .info-container .title-container {
+    margin-bottom: 35px;
+  }
+
+  .HeaderTitle,
+  .Header .info-container .title-container .gh-button-container {
+    width: 100vw;
+  }
+
+  .Skills .skills-cards-container {
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .Skills .skills-cards-container .SkillCard {
+    width: 100%;
+    flex-basis: 100px;
+  }
+
+  .Skills .skills-cards-container .SkillCard .level,
+  .Skills .skills-cards-container .SkillCard .skillname {
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translate(0, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}

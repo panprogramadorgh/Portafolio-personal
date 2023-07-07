@@ -1,0 +1,14 @@
+.Card {
+  font-size: 1.1rem;
+  padding: 30px;
+  margin: 10px;
+  background-color: var(--bg-card-color);
+  backdrop-filter: blur(4px);
+  border: 0.06em solid #2d2d2d;
+  border-radius: 1rem;
+  transition: all 0.2s;
+}
+
+.Card:hover {
+  border-color: #444;
+}

@@ -1,0 +1,9 @@
+.Title {
+  padding: 50px 0;
+  font-size: 55px;
+}
+
+.Title .relevant-word {
+  font-size: 70px;
+  color: var(--main-blue);
+}

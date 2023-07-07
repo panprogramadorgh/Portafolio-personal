@@ -1,0 +1,50 @@
+.SkillCard {
+  flex-basis: 320px;
+  transition: all 0.2s, border 0.5s, background 1s;
+}
+
+.SkillCard.gold {
+  border-color: #09f5;
+  background-color: #0099ff08;
+}
+
+.SkillCard.gold:hover {
+  border-color: #09f;
+  background-color: #0099ff1a;
+  box-shadow: 0 0 100px 0px #0099ee30;
+}
+
+.SkillCard.medium {
+  border-color: #bf4ff770;
+  background-color: transparent;
+}
+
+.SkillCard.medium:hover {
+  border-color: #bf4ff7f0;
+}
+
+.SkillCard .image {
+  width: 20px;
+}
+
+.SkillCard .skillname,
+.level {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.SkillCard .skillname svg,
+.level svg {
+  font-size: 20px;
+}
+
+.SkillCard .skillname .skillname-logo {
+  display: flex;
+  align-items: center;
+}
+
+.SkillCard .skillname .skillname-logo img {
+  padding-right: 5px;
+  width: 27px;
+}
