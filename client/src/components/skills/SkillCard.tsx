@@ -1,5 +1,5 @@
+import { useCallback } from "react";
 import Card from "../generic/Card";
-import { AiOutlineLine } from "react-icons/ai";
 import { VscArrowRight } from "react-icons/vsc";
 
 import "../../stylesheets/skills/SkillCard.css";
@@ -20,12 +20,12 @@ const SkillCard = ({ data }: SkillCardProps) => {
     medium: "#bf4ff7",
     begginer: "#ddd",
   };
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (data.onClickUrl) {
       window.open(data.onClickUrl, "_BLANK");
       return;
     }
-  };
+  }, []);
   return (
     <Card
       type="card"

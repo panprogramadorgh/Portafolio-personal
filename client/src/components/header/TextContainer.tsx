@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { VscArrowRight } from "react-icons/vsc";
 import Button from "../generic/Button";
 import Card from "../generic/Card";
@@ -14,7 +15,7 @@ const TextContainer = () => {
     </p>
   );
 
-  const handleButtonClick = () => {
+  const handleButtonClick = useCallback(() => {
     const element = document.querySelector(".Skills");
     if (element !== null) {
       window.scrollTo({
@@ -22,7 +23,7 @@ const TextContainer = () => {
         top: window.scrollY + element.getBoundingClientRect().top - 100,
       });
     }
-  };
+  }, []);
   return (
     <Card type="text" className="TextContainer">
       <div className="content">{message}</div>

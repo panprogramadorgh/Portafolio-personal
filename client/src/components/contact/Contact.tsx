@@ -1,4 +1,4 @@
-import { useState, ChangeEventHandler, ReactNode } from "react";
+import { useState, ChangeEventHandler, ReactNode, useCallback } from "react";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import Card from "../generic/Card";
@@ -33,25 +33,28 @@ const Contact = () => {
     state: ShowWindowState.hiddenWindow,
   });
 
-  const updateShowWindowState = async ({ state, message }: ShowWindow) => {
-    setShowWindow({
-      state,
-      message,
-    });
-    await new Promise((resolve) => {
-      setTimeout(resolve, 5000);
-    });
-    setWindowFadeoutAnimation(true);
-    await new Promise((resolve) => {
-      setTimeout(resolve, 150);
-    });
-    setShowWindow({
-      state: ShowWindowState.hiddenWindow,
-    });
-    setWindowFadeoutAnimation(false);
-  };
+  const updateShowWindowState = useCallback(
+    async ({ state, message }: ShowWindow) => {
+      setShowWindow({
+        state,
+        message,
+      });
+      await new Promise((resolve) => {
+        setTimeout(resolve, 5000);
+      });
+      setWindowFadeoutAnimation(true);
+      await new Promise((resolve) => {
+        setTimeout(resolve, 150);
+      });
+      setShowWindow({
+        state: ShowWindowState.hiddenWindow,
+      });
+      setWindowFadeoutAnimation(false);
+    },
+    []
+  );
 
-  const handleButtonClick = () => {
+  const handleButtonClick = useCallback(() => {
     if (showWindow.state !== ShowWindowState.hiddenWindow) return;
     const trimmedInputs = Object.fromEntries(
       Object.entries({ ...inputs }).map(([key, value]) => {
@@ -97,7 +100,7 @@ const Contact = () => {
       .catch((error) => {
         console.error(error);
       });
-  };
+  }, [showWindow, inputs]);
   const handleInputChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > = ({ target }) => {

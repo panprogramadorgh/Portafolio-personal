@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import useComponentFadeinAnimation from "../../hooks/useComponentFadeinAnimation";
 import GhLinkButton from "../generic/GhLinkButton";
 import HeaderTitle from "./HeaderTitle";
@@ -10,7 +11,7 @@ const Header = () => {
     targetElementQuery: ".Header",
   });
 
-  const handleButtonClick = () => {
+  const handleButtonClick = useCallback(() => {
     const element = document.querySelector(".Skills");
     window.scrollTo({
       behavior: "smooth",
@@ -19,7 +20,7 @@ const Header = () => {
         (element as HTMLElement).getBoundingClientRect().top -
         100,
     });
-  };
+  }, []);
 
   return (
     <header className="Header" style={{ animation, opacity: visible ? 1 : 0 }}>

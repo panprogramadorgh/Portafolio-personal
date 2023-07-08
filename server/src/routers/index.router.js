@@ -1,3 +1,5 @@
+import nodemailer from "nodemailer";
+import { createReadStream } from "fs";
 import Skill from "../models/skill.model.js";
 import Project from "../models/project.model.js";
 import Contact from "../models/contact.model.js";
@@ -36,6 +38,29 @@ indexRouter.post("/contact", async (req, res) => {
       status: 500,
     });
   }
+});
+
+indexRouter.post("/send-email-verification", (req, res) => {
+  const viewStream = createReadStream("./src/views/verification.html");
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "barreroalvaro2007@gmail.com",
+      pass: "<password>",
+    },
+  });
+
+  const message = {
+    from: "<email>",
+    to: "<email>",
+    subject: "test email",
+    html: viewStream,
+  };
+
+  transporter.sendEmail(message, (error) => {
+    if (error) return console.error(error);
+  });
 });
 
 export default indexRouter;

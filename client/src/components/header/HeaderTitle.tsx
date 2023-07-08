@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "../../stylesheets/header/HeaderTitle.css";
 
 const HeaderTitle = () => {
@@ -10,7 +10,7 @@ const HeaderTitle = () => {
   ];
   const [currentAptidude, setCurrentAptidude] = useState<string>(aptitudes[0]);
   const [aptitudeAnimation, setAptitudeAnimation] = useState<string>("none");
-  const changeAptitude = async () => {
+  const changeAptitude = useCallback(async () => {
     const index = aptitudes.indexOf(currentAptidude);
     setAptitudeAnimation("fadeout_aptitude 0.32s ease");
     await new Promise((resolve) => {
@@ -22,7 +22,7 @@ const HeaderTitle = () => {
         resolve(null);
       }, 300);
     });
-  };
+  }, []);
   useEffect(() => {
     setTimeout(changeAptitude, timeToChangeAptitude);
   }, [currentAptidude]);

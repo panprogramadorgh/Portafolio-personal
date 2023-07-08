@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import "../../stylesheets/generic/Title.css";
 
 interface Props {
@@ -17,27 +18,26 @@ const Title = ({
       </div>
     );
   }
-  return (
-    <h1 className="Title">
-      {[...splitedMessage]
-        .reverse()
-        .map((messagePiece, index) => {
-          if (index !== 0) {
-            if (messagePiece !== "") {
-              return (
-                <>
-                  {messagePiece}
-                  <span className="relevant-word">{relevantWord}</span>
-                </>
-              );
-            }
+  const formattedTitleContent = useMemo(() => {
+    return [...splitedMessage]
+      .reverse()
+      .map((messagePiece, index) => {
+        if (index !== 0) {
+          if (messagePiece !== "") {
+            return (
+              <>
+                {messagePiece}
+                <span className="relevant-word">{relevantWord}</span>
+              </>
+            );
           }
-          return messagePiece;
-        })
-        .filter((arr) => arr !== undefined)
-        .reverse()}
-    </h1>
-  );
+        }
+        return messagePiece;
+      })
+      .filter((arr) => arr !== undefined)
+      .reverse();
+  }, []);
+  return <h1 className="Title">{formattedTitleContent}</h1>;
 };
 
 export default Title;
