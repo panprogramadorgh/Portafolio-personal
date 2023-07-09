@@ -18,7 +18,7 @@
 
 1. ...
 
-2. Modificar handleButtonClick en contact para que cuando se haga click en el boton, se genere un numero aleatorio y se inserte un documento con los datos del formulario en la colleccion previamente creada.
+2. ...
 
 3. Enviar email (avisando al usuario que verifique su email) con una vista html con el codigo generado anteriormente
 

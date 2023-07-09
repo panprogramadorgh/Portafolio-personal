@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { createReadStream } from "fs";
+import view from "../views/verification.js";
 import Skill from "../models/skill.model.js";
 import Project from "../models/project.model.js";
 import Contact from "../models/contact.model.js";
@@ -40,22 +40,20 @@ indexRouter.post("/contact", async (req, res) => {
   }
 });
 
-indexRouter.post("/send-email-verification", (req, res) => {
-  const viewStream = createReadStream("./src/views/verification.html");
-
+indexRouter.post("/email-verification", (req, res) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: "barreroalvaro2007@gmail.com",
-      pass: "<password>",
+      pass: "olsejezwxdyswjcz",
     },
   });
 
   const message = {
-    from: "<email>",
-    to: "<email>",
+    from: "barreroalvaro2007@gmail.com",
+    to: "barreroalvaro2007@gmail.com",
     subject: "test email",
-    html: viewStream,
+    html: view,
   };
 
   transporter.sendEmail(message, (error) => {
