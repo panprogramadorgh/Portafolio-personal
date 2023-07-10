@@ -9,7 +9,7 @@ export function createVerificationCode(length) {
 }
 
 /* TODO: Ivestigar sobre estilizar vistas de email */
-export function generateViewFromCode(verificationCode) {
+export function generateViewFromCode({ verificationCode, name }) {
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -25,30 +25,9 @@ export function generateViewFromCode(verificationCode) {
         </h1>
       </header>
       <main class="container">
-        <div class="text-container">
-          <p>
-            Someone is trying to send a contact request to Alvaro portfolio with
-            your email address. It is you ? - ${
-              verificationCode ? verificationCode : 0
-            }
-          </p>
-        </div>
-        <button class="Button" onClick="{callback}">
-          Yes, i am<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-            <path
-              clip-rule="evenodd"
-              d="M9.00025 13.8871L14.0002 8.8871L14.0002 8.17999L9.00025 3.17999L8.29314 3.8871L12.4396 8.03354L2.00024 8.03354L2.00024 9.03354L12.4396 9.03354L8.29314 13.18L9.00025 13.8871Z"
-            />
-          </svg>
-        </button>
-        <button class="Button" onClick="{callback}">
-          No, i am not<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-            <path
-              clip-rule="evenodd"
-              d="M9.00025 13.8871L14.0002 8.8871L14.0002 8.17999L9.00025 3.17999L8.29314 3.8871L12.4396 8.03354L2.00024 8.03354L2.00024 9.03354L12.4396 9.03354L8.29314 13.18L9.00025 13.8871Z"
-            />
-          </svg>
-        </button>
+      <p>
+      Hi ${name} thanks for sending a contact request, here is your verification code: ${verificationCode}
+    </p>
       </main>
   
       <style>

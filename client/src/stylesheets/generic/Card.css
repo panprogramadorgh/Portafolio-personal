@@ -2,7 +2,7 @@
   font-size: 1.1rem;
   padding: 30px;
   margin: 10px;
-  background-color: var(--bg-card-color);
+  background-color: var(--main-dark-bg);
   backdrop-filter: blur(4px);
   border: 0.06em solid #2d2d2d;
   border-radius: 1rem;
@@ -11,4 +11,42 @@
 
 .Card:hover {
   border-color: #444;
+}
+
+.Card input,
+textarea {
+  background-color: transparent;
+  color: #fff;
+  font-size: 0.9rem;
+  width: 100%;
+  border: 0.06rem solid #2e2e2e;
+  padding: 15px 25px;
+  outline: none;
+  margin: 10px 0;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.Card input:focus,
+textarea:focus {
+  border-color: #09e;
+  background-color: #22bbff15;
+  box-shadow: 0 0 100px 0px #0099ee30;
+}
+
+.Card textarea {
+  resize: none;
+  height: 300px;
+}
+
+.Card textarea::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.Card textarea::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+}
+
+.Card .Button {
+  margin: 10px 0;
 }

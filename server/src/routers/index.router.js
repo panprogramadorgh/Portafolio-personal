@@ -44,12 +44,28 @@ indexRouter.post("/contact-request", async (req, res) => {
 });
 
 indexRouter.post("/email-verification", async (req, res) => {
-  /* pushing mongoose document section */
   const { body } = req;
   const { name, email, message } = body;
   const verificationCode = createVerificationCode(5);
   try {
     await new Contact({ name, email, message }).validate();
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "barreroalvaro2007@gmail.com",
+        pass: "olsejezwxdyswjcz", // TODO: Cambiar contraseña y esconder en .env
+      },
+    });
+    await transporter.verify();
+    const view = generateViewFromCode({ verificationCode, name });
+    const nodemailerMessage = {
+      from: "barreroalvaro2007@gmail.com",
+      to: email,
+      subject: "Contact request | Verification code",
+      html: view,
+    };
+    /* TODO: Manejar error de verificacion de email */
+    transporter.sendMail(nodemailerMessage);
     res.status(200).json({
       status: 200,
       message: "Email verification sended successfully !",
@@ -62,30 +78,6 @@ indexRouter.post("/email-verification", async (req, res) => {
     });
     return;
   }
-
-  /* nodemailer section */
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "barreroalvaro2007@gmail.com",
-      pass: "olsejezwxdyswjcz",
-    },
-  });
-  transporter.verify((error) => {});
-  const view = generateViewFromCode(verificationCode);
-  const nodemailerMessage = {
-    from: "barreroalvaro2007@gmail.com",
-    to: "barreroalvaro2007@gmail.com",
-    subject: "test email",
-    html: view,
-  };
-  transporter.sendMail(nodemailerMessage, (error) => {
-    if (error)
-      return res.status(500).json({
-        status: 500,
-        message: "Nodemailer error: an error happends when sending the email !",
-      });
-  });
 });
 
 export default indexRouter;

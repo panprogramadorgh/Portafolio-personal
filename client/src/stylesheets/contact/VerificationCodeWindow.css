@@ -1,0 +1,19 @@
+.VerificationCodeWindow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000a;
+}
+.VerificationCodeWindow .Card {
+  background-color: var(--main-dark-bg);
+}
+.VerificationCodeWindow .Card input {
+  margin: 30px 0;
+  margin-top: 50px;
+}

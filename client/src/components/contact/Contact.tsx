@@ -1,4 +1,5 @@
 import { useState, ChangeEventHandler, ReactNode, useCallback } from "react";
+import VerificationCodeWindow from "../contact/VerificationCodeWindow";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import Card from "../generic/Card";
@@ -17,8 +18,9 @@ const Contact = () => {
     message: "",
   });
 
-  const [windowFadeoutAnimation, setWindowFadeoutAnimation] =
-    useState<boolean>(false);
+  const [verificationCodeWindow, setVerificationCodeWindow] = useState<
+    number | null
+  >(null);
 
   const enum ShowWindowState {
     contactRequestSended,
@@ -32,6 +34,9 @@ const Contact = () => {
   const [showWindow, setShowWindow] = useState<ShowWindow>({
     state: ShowWindowState.hiddenWindow,
   });
+
+  const [windowFadeoutAnimation, setWindowFadeoutAnimation] =
+    useState<boolean>(false);
 
   const updateShowWindowState = useCallback(
     async ({ state, message }: ShowWindow) => {
@@ -73,12 +78,7 @@ const Contact = () => {
           if (data.status === 500) {
             updateShowWindowState({
               state: ShowWindowState.contactRequestFailed,
-              message: (
-                <>
-                  {data.message}
-                  {/* <span>* Invalid email or empty fields</span> */}
-                </>
-              ),
+              message: <>{data.message}</>,
             });
             return;
           }
@@ -87,12 +87,9 @@ const Contact = () => {
 
           updateShowWindowState({
             state: ShowWindowState.contactRequestSended,
-            message: (
-              <>
-                {data.message} - Codigo a comprobar: {data.verificationCode}
-              </>
-            ),
+            message: <>{data.message}</>,
           });
+          setVerificationCodeWindow(data.verificationCode as number);
         }
       )
       .catch((error) => {
@@ -113,6 +110,27 @@ const Contact = () => {
 
   return (
     <PageSection className="Contact">
+      {verificationCodeWindow !== null ? (
+        <VerificationCodeWindow
+          handleButtonClick={(inputValue) => {
+            const inputValueParsed: number = Number(inputValue);
+            if (inputValueParsed === verificationCodeWindow) {
+              /* Si coincide */
+              window.alert("El numero conincide");
+              setInputs({
+                name: "",
+                email: "",
+                message: "",
+              });
+              setVerificationCodeWindow(null);
+              /* TODO: Hacer fetching a endpoint para postear en la base de datos contact request */
+              return;
+            }
+            /* Si no coincide el numero */
+            window.alert("El numero no coincide");
+          }}
+        />
+      ) : null}
       {showWindow.state !== ShowWindowState.hiddenWindow ? (
         <Card
           animation={
