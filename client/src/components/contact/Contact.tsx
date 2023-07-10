@@ -56,58 +56,60 @@ const Contact = () => {
 
   const handleButtonClick = useCallback(() => {
     if (showWindow.state !== ShowWindowState.hiddenWindow) return;
-    const trimmedInputs = Object.fromEntries(
-      Object.entries({ ...inputs }).map(([key, value]) => {
-        return [key, value.trim()];
-      })
-    );
-    fetch("http://localhost:3000/api/contact", {
+    fetch("http://localhost:3000/api/email-verification", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(trimmedInputs),
+      body: JSON.stringify(inputs),
     })
       .then((response) => response.json())
-      .then((data: { status: number; message: string }) => {
-        if (data.status === 500) {
+      .then(
+        (data: {
+          status: number;
+          message: string;
+          verificationCode?: number;
+        }) => {
+          if (data.status === 500) {
+            updateShowWindowState({
+              state: ShowWindowState.contactRequestFailed,
+              message: (
+                <>
+                  {data.message}
+                  {/* <span>* Invalid email or empty fields</span> */}
+                </>
+              ),
+            });
+            return;
+          }
+
+          /* TODO: Activar estado para mostrar ventana de verificacion de codigo y en el caso de ser correcto, limpiar estado inputs */
+
           updateShowWindowState({
-            state: ShowWindowState.contactRequestFailed,
+            state: ShowWindowState.contactRequestSended,
             message: (
               <>
-                Something seems to be wrong !
-                <span>* Invalid email or empty fields</span>
+                {data.message} - Codigo a comprobar: {data.verificationCode}
               </>
             ),
           });
-          return;
         }
-        const { name, email, message } = Object.fromEntries(
-          Object.entries({ ...inputs }).map(([key]) => {
-            return [key, ""];
-          })
-        );
-        setInputs({
-          name,
-          email,
-          message,
-        });
-        updateShowWindowState({
-          state: ShowWindowState.contactRequestSended,
-          message: <>{data.message}</>,
-        });
-      })
+      )
       .catch((error) => {
         console.error(error);
       });
   }, [showWindow, inputs]);
+
   const handleInputChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
-  > = ({ target }) => {
-    const newInputs = { ...inputs };
-    newInputs[target.id as "name" | "email" | "message"] = target.value;
-    setInputs(newInputs);
-  };
+  > = useCallback(
+    ({ target }) => {
+      const newInputs = { ...inputs };
+      newInputs[target.id as "name" | "email" | "message"] = target.value;
+      setInputs(newInputs);
+    },
+    [inputs]
+  );
 
   return (
     <PageSection className="Contact">

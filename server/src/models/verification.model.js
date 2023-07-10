@@ -1,10 +1,9 @@
-import { mopdel, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const verificationSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: false,
   },
   email: {
     type: String,
@@ -14,12 +13,11 @@ const verificationSchema = new Schema({
   message: {
     type: String,
     required: true,
-    unique: false,
+  },
+  verificationCode: {
+    type: Number,
+    required: true,
   },
 });
 
-export default mopdel(
-  "Verification",
-  verificationSchema,
-  "email verifications"
-);
+export default model("Verification", verificationSchema, "email verifications");

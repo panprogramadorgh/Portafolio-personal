@@ -4,7 +4,6 @@ const contactSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: false,
   },
   email: {
     type: String,
@@ -14,7 +13,6 @@ const contactSchema = new Schema({
   message: {
     type: String,
     required: true,
-    unique: false,
   },
 });
 
