@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import useFadeinAnimation from "../../hooks/useFadeinAnimation";
 import "../../stylesheets/generic/PageSection.css";
 
 interface Props {
@@ -7,9 +8,14 @@ interface Props {
 }
 
 const PageSection = ({ className = "", children }: Props) => {
-  /* TODO: Crear hook para intersection observer */
+  const ref = useFadeinAnimation({
+    animationTime: 0.5,
+  });
+
   return (
-    <article className={`PageSection ${className}`.trim()}>{children}</article>
+    <article ref={ref} className={`PageSection ${className}`.trim()}>
+      {children}
+    </article>
   );
 };
 
