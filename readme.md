@@ -6,7 +6,7 @@ Este proyecto consiste en un portafolio de contacto, incluye una funcionalidad d
 
 ## Como iniciar el proyecto en modo desarrollo
 
-El proyecto consta de dos partes, el cliente y el servidor, asique se tendra que iniciar cada una de las partes indelendientemente para poder iniciar completamente la aplicacion. Aunque antes de iniciar cada parte del proyecto hay que instalar las dependencias asique situate en la carpeta raiz del proyecto y ejecuta el siguiente comando: `cd ./server/;npm i;cd ../client/;npm i;cd ../`
+El proyecto consta de dos partes, el cliente y el servidor, asique se tendra que iniciar cada una de las partes indelendientemente para poder iniciar completamente la aplicacion. Aunque antes de iniciar cada parte del proyecto hay que instalar las dependencias asique situate en la carpeta raiz del proyecto y ejecuta el siguiente comando: `cd ./server/;npm i;cd ../client/;npm i;cd ../`. Para iniciar los dos proyectos de la aplicacion en un solo comando, puedes ejcutar: `cd ./server/;npm run dev;cd ../client/;npm run dev;cd ../`
 
 ## Cosas a tener en cuenta
 
