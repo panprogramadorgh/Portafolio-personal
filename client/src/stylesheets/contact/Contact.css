@@ -23,13 +23,18 @@
   border-color: #0099ff80;
 }
 
+.Contact .Card.window.contact-request-accepted {
+  background-color: rgba(48, 194, 48, 0.158);
+  border-color: rgba(13, 212, 13, 0.418);
+}
+
 .Contact .Card.window.contact-request-failed {
   background-color: #ff000010;
   border-color: #ff000050;
 }
 
 .Contact .Card {
-  max-width: 800px;
+  max-width: 1000px;
   padding: 50px;
 }
 

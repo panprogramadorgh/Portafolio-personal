@@ -9,11 +9,28 @@
   width: 100vw;
   height: 100vh;
   background-color: #000a;
+  backdrop-filter: blur(5px);
+  animation: fadein 0.2s ease-in-out;
 }
-.VerificationCodeWindow .Card {
-  background-color: var(--main-dark-bg);
-}
-.VerificationCodeWindow .Card input {
+
+.VerificationCodeWindow .Card .input {
   margin: 30px 0;
   margin-top: 50px;
+}
+
+.VerificationCodeWindow .Card .close-window-button-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px;
+}
+
+.VerificationCodeWindow .Card .close-window-button-container svg {
+  font-size: 1.5rem;
+  color: #ddd;
+  transition: all 0.2s;
+}
+
+.VerificationCodeWindow .Card .close-window-button-container svg:hover {
+  color: #444;
 }

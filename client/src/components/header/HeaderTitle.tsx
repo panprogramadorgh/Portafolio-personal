@@ -10,8 +10,11 @@ const HeaderTitle = () => {
   ];
   const [currentAptidude, setCurrentAptidude] = useState<string>(aptitudes[0]);
   const [aptitudeAnimation, setAptitudeAnimation] = useState<string>("none");
+
   const changeAptitude = useCallback(async () => {
-    const index = aptitudes.indexOf(currentAptidude);
+    const index = aptitudes.findIndex(
+      (aptitude) => aptitude === currentAptidude
+    );
     setAptitudeAnimation("fadeout_aptitude 0.32s ease");
     await new Promise((resolve) => {
       setTimeout(() => {
@@ -22,7 +25,7 @@ const HeaderTitle = () => {
         resolve(null);
       }, 300);
     });
-  }, []);
+  }, [currentAptidude]);
   useEffect(() => {
     setTimeout(changeAptitude, timeToChangeAptitude);
   }, [currentAptidude]);

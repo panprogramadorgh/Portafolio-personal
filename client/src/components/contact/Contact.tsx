@@ -24,6 +24,7 @@ const Contact = () => {
 
   const enum ShowWindowState {
     contactRequestSended,
+    contactRequestAccepted,
     contactRequestFailed,
     hiddenWindow,
   }
@@ -83,8 +84,6 @@ const Contact = () => {
             return;
           }
 
-          /* TODO: Activar estado para mostrar ventana de verificacion de codigo y en el caso de ser correcto, limpiar estado inputs */
-
           updateShowWindowState({
             state: ShowWindowState.contactRequestSended,
             message: <>{data.message}</>,
@@ -112,22 +111,56 @@ const Contact = () => {
     <PageSection className="Contact">
       {verificationCodeWindow !== null ? (
         <VerificationCodeWindow
-          handleButtonClick={(inputValue) => {
+          handleCloseButtonClick={() => {
+            setInputs({
+              name: "",
+              email: "",
+              message: "",
+            });
+            setVerificationCodeWindow(null);
+            updateShowWindowState({
+              state: ShowWindowState.contactRequestFailed,
+              message: <>Email verification canceled</>,
+            });
+          }}
+          handleButtonClick={async (inputValue: string) => {
             const inputValueParsed: number = Number(inputValue);
             if (inputValueParsed === verificationCodeWindow) {
               /* Si coincide */
-              window.alert("El numero conincide");
+              // posteando en la base de datos la contact request
+              try {
+                await fetch("http://localhost:3000/api/contact-request", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(inputs),
+                });
+              } catch {
+                console.error("Failed to send the contact request !");
+              }
+
               setInputs({
                 name: "",
                 email: "",
                 message: "",
               });
               setVerificationCodeWindow(null);
-              /* TODO: Hacer fetching a endpoint para postear en la base de datos contact request */
-              return;
+              updateShowWindowState({
+                state: ShowWindowState.contactRequestAccepted,
+                message: <>Contact request accepted !</>,
+              });
+
+              /* FIXME: Arreglar la basura esta para que escrolee */
+              // const header = document.querySelector(".Header") as HTMLElement;
+              // header.scrollTo({
+              //   behavior: "smooth",
+              //   top: 0,
+              // });
+              return true;
             }
             /* Si no coincide el numero */
-            window.alert("El numero no coincide");
+            return false;
           }}
         />
       ) : null}
@@ -140,6 +173,8 @@ const Contact = () => {
           className={`window ${
             showWindow.state === ShowWindowState.contactRequestSended
               ? "contact-request-sended"
+              : showWindow.state === ShowWindowState.contactRequestAccepted
+              ? "contact-request-accepted"
               : "contact-request-failed"
           }`.trim()}
         >

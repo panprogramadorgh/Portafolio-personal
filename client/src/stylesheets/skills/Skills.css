@@ -1,5 +1,10 @@
+.Skills {
+  align-items: center;
+}
+
 .Skills .skills-cards-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  max-width: 1500px;
 }

@@ -12,11 +12,7 @@ const Title = ({
 }: Props) => {
   const splitedMessage = message.split(relevantWord);
   if (splitedMessage.length === 1) {
-    return (
-      <div className="Title">
-        <h1 className="title">{message}</h1>
-      </div>
-    );
+    return <div className="Title">message</div>;
   }
   const formattedTitleContent = useMemo(() => {
     return [...splitedMessage]

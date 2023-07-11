@@ -2,7 +2,7 @@
   font-size: 1.1rem;
   padding: 30px;
   margin: 10px;
-  background-color: var(--main-dark-bg);
+  background-color: var(--card-bg);
   backdrop-filter: blur(4px);
   border: 0.06em solid #2d2d2d;
   border-radius: 1rem;
@@ -27,6 +27,17 @@ textarea {
   transition: all 0.2s;
 }
 
+.Card textarea {
+  resize: none;
+  height: 300px;
+}
+
+.Card input.wrong,
+textarea.wrong {
+  background-color: #ff00000c;
+  border-color: #f006;
+}
+
 .Card input:focus,
 textarea:focus {
   border-color: #09e;
@@ -34,9 +45,11 @@ textarea:focus {
   box-shadow: 0 0 100px 0px #0099ee30;
 }
 
-.Card textarea {
-  resize: none;
-  height: 300px;
+.Card input.wrong:focus,
+textarea.wrong:focus {
+  background-color: #ff00000c;
+  border-color: #f006;
+  box-shadow: none;
 }
 
 .Card textarea::-webkit-scrollbar-track {

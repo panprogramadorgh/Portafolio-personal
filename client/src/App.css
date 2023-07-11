@@ -6,7 +6,7 @@ body {
   background-repeat: repeat;
   background-position: -150px 0;
   background-size: 30rem;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
   color: #ddd;
   overflow-x: hidden;
 }
@@ -60,7 +60,13 @@ body {
     width: 100vw;
   }
 
+  .Title,
+  .Title .relevant-word {
+    font-size: 2.5rem;
+  }
+
   .Skills .skills-cards-container {
+    width: 90vw;
     flex-flow: column;
     align-items: center;
     justify-content: flex-start;
@@ -80,10 +86,8 @@ body {
 @keyframes fadein {
   from {
     opacity: 0;
-    transform: translate(0, -10px);
   }
   to {
     opacity: 1;
-    transform: translate(0, 0);
   }
 }

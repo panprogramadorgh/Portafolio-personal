@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import useComponentFadeinAnimation from "../../hooks/useComponentFadeinAnimation";
 import GhLinkButton from "../generic/GhLinkButton";
 import HeaderTitle from "./HeaderTitle";
 import Card from "../generic/Card";
@@ -7,10 +6,6 @@ import Button from "../generic/Button";
 import "../../stylesheets/header/Header.css";
 
 const Header = () => {
-  const { animation, visible } = useComponentFadeinAnimation({
-    targetElementQuery: ".Header",
-  });
-
   const handleButtonClick = useCallback(() => {
     const element = document.querySelector(".Skills");
     window.scrollTo({
@@ -23,7 +18,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="Header" style={{ animation, opacity: visible ? 1 : 0 }}>
+    <header className="Header">
       <div className="info-container">
         <div className="title-container">
           <HeaderTitle />
