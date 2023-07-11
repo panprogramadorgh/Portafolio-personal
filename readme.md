@@ -9,7 +9,7 @@ Este proyecto consiste en un portafolio de contacto, incluye una funcionalidad d
 El proyecto consta de dos partes, el cliente y el servidor, asique se tendra que iniciar cada una de las partes indelendientemente para poder iniciar completamente la aplicacion. Aunque antes de iniciar cada parte del proyecto hay que instalar las dependencias asique situate en la carpeta raiz del proyecto y ejecuta el siguiente comando: `cd ./server/;npm i;cd ../client/;npm i;cd ../`. Para iniciar los proyectos lo mas rapido posible, ejecuta los siguientes comandos consecutivamente en terminnales distintas en la carpeta raiz:
 
 1. `cd ./server/;npm run dev`
-2. `cd ../client/;npm run dev`
+2. `cd ./client/;npm run dev`
 
 ## Cosas a tener en cuenta
 
