@@ -1,3 +1,13 @@
+.Projects .background {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000a;
+  z-index: 100;
+}
+
 .Projects .projects-container {
   width: 100%;
   display: flex;

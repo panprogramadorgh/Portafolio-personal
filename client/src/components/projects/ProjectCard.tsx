@@ -1,3 +1,4 @@
+import { useCallback, MouseEventHandler } from "react";
 import Card from "../generic/Card";
 import "../../stylesheets/projects/ProjectCard.css";
 
@@ -8,13 +9,25 @@ export interface ProjectCardProps {
     image: string;
     url?: string;
   };
+  onMouseEnter: MouseEventHandler<HTMLDivElement>;
+  onMouseLeave: MouseEventHandler<HTMLDivElement>;
 }
-const ProjectCard = ({ data }: ProjectCardProps) => {
-  const handleClick = () => {
+const ProjectCard = ({
+  data,
+  onMouseEnter,
+  onMouseLeave,
+}: ProjectCardProps) => {
+  const handleClick = useCallback(() => {
     window.open(data.url, "_BLANK");
-  };
+  }, []);
   return (
-    <Card type="card" className="ProjectCard" onClick={handleClick}>
+    <Card
+      type="card"
+      className="ProjectCard"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={handleClick}
+    >
       <div
         className="image-container"
         style={{
