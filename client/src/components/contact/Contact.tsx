@@ -1,4 +1,5 @@
 import { useState, ChangeEventHandler, ReactNode, useCallback } from "react";
+import useScrollTo from "../../hooks/useScrollTo";
 import VerificationCodeWindow from "../contact/VerificationCodeWindow";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
@@ -60,40 +61,39 @@ const Contact = () => {
     []
   );
 
-  const handleButtonClick = useCallback(() => {
+  const handleButtonClick = useCallback(async () => {
     if (showWindow.state !== ShowWindowState.hiddenWindow) return;
-    fetch("http://localhost:3000/api/email-verification", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(inputs),
-    })
-      .then((response) => response.json())
-      .then(
-        (data: {
-          status: number;
-          message: string;
-          verificationCode?: number;
-        }) => {
-          if (data.status === 500) {
-            updateShowWindowState({
-              state: ShowWindowState.contactRequestFailed,
-              message: <>{data.message}</>,
-            });
-            return;
-          }
-
-          updateShowWindowState({
-            state: ShowWindowState.contactRequestSended,
-            message: <>{data.message}</>,
-          });
-          setVerificationCodeWindow(data.verificationCode as number);
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/email-verification",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(inputs),
         }
-      )
-      .catch((error) => {
-        console.error(error);
+      );
+      interface Data {
+        status: number;
+        message: string;
+        verificationCode?: number;
+      }
+      const data: Data = await response.json();
+      updateShowWindowState({
+        state:
+          data.status === 200
+            ? ShowWindowState.contactRequestSended
+            : ShowWindowState.contactRequestFailed,
+        message: <>{data.message}</>,
       });
+      if (data.status === 500 && !data.verificationCode) {
+        return;
+      }
+      setVerificationCodeWindow(data.verificationCode as number);
+    } catch (error) {
+      console.log(error);
+    }
   }, [showWindow, inputs]);
 
   const handleInputChange: ChangeEventHandler<
@@ -123,11 +123,9 @@ const Contact = () => {
               message: <>Email verification canceled</>,
             });
           }}
-          handleButtonClick={async (inputValue: string) => {
+          handleVerfyButtonClick={async (inputValue: string) => {
             const inputValueParsed: number = Number(inputValue);
             if (inputValueParsed === verificationCodeWindow) {
-              /* Si coincide */
-              // posteando en la base de datos la contact request
               try {
                 await fetch("http://localhost:3000/api/contact-request", {
                   method: "POST",
@@ -138,6 +136,10 @@ const Contact = () => {
                 });
               } catch {
                 console.error("Failed to send the contact request !");
+                updateShowWindowState({
+                  state: ShowWindowState.contactRequestFailed,
+                  message: <>Failed to send the contact request !</>,
+                });
               }
 
               setInputs({
@@ -151,15 +153,14 @@ const Contact = () => {
                 message: <>Contact request accepted !</>,
               });
 
-              /* FIXME: Arreglar la basura esta para que escrolee */
-              // const header = document.querySelector(".Header") as HTMLElement;
-              // header.scrollTo({
-              //   behavior: "smooth",
-              //   top: 0,
-              // });
+              useScrollTo({
+                positionToScroll: 0,
+                delay: 500,
+              });
+
+              // lo que retorna la funcion solamente tiene un proposito informativo para el usuario (muestra una targeta)
               return true;
             }
-            /* Si no coincide el numero */
             return false;
           }}
         />
