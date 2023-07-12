@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { VscChromeClose } from "react-icons/vsc";
 import { useState, ChangeEventHandler } from "react";
 import Card from "../generic/Card";
@@ -5,23 +6,22 @@ import Button from "../generic/Button";
 import "../../stylesheets/contact/VerificationCodeWindow.css";
 
 interface Props {
-  handleButtonClick: (inputValue: string) => Promise<boolean>;
+  handleVerfyButtonClick: (inputValue: string) => Promise<boolean>;
   handleCloseButtonClick: () => void;
 }
 
 const VerificationCodeWindow = ({
-  handleButtonClick,
+  handleVerfyButtonClick,
   handleCloseButtonClick,
 }: Props) => {
   const [input, setInput] = useState<string>("");
   const [invalidCode, setInvalidCode] = useState<boolean>(false);
 
-  const handleInputChangeEvent: ChangeEventHandler<HTMLInputElement> = ({
-    target,
-  }) => {
-    setInput(target.value);
-    setInvalidCode(false);
-  };
+  const handleInputChangeEvent: ChangeEventHandler<HTMLInputElement> =
+    useCallback(({ target }) => {
+      setInput(target.value);
+      setInvalidCode(false);
+    }, []);
 
   return (
     <div className="VerificationCodeWindow">
@@ -40,13 +40,13 @@ const VerificationCodeWindow = ({
         />
         <Button
           hasArrow
-          callback={async () => {
-            const condition = await handleButtonClick(input);
-            if (!condition) {
+          callback={useCallback(async () => {
+            const codeIsCorrect = await handleVerfyButtonClick(input);
+            if (!codeIsCorrect) {
               setInput("");
               setInvalidCode(true);
             }
-          }}
+          }, [input])}
         >
           Verify code
         </Button>
