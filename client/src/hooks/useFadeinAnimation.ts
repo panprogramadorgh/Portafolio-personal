@@ -9,11 +9,9 @@ const useFadeinAnimation = ({ animationTime }: Props) => {
     const observer = new IntersectionObserver(
       ([IntersectionObserverEntry], IntersectionObserverRef) => {
         if (IntersectionObserverEntry.isIntersecting) {
-          console.log(
-            IntersectionObserverEntry.target.setAttribute(
-              "style",
-              `animation: fadein ${animationTime}s ease-in-out; opacity: 1`
-            )
+          IntersectionObserverEntry.target.setAttribute(
+            "style",
+            `animation: fadein ${animationTime}s ease-in-out; opacity: 1`
           );
           IntersectionObserverRef.unobserve(IntersectionObserverEntry.target);
         }
