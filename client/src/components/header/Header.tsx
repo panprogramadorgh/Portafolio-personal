@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import useScrollTo from "../../hooks/useScrollTo";
 import GhLinkButton from "../generic/GhLinkButton";
 import HeaderTitle from "./HeaderTitle";
 import Card from "../generic/Card";
@@ -8,12 +9,13 @@ import "../../stylesheets/header/Header.css";
 const Header = () => {
   const handleButtonClick = useCallback(() => {
     const element = document.querySelector(".Skills");
-    window.scrollTo({
-      behavior: "smooth",
-      top:
-        window.scrollY +
-        (element as HTMLElement).getBoundingClientRect().top -
-        100,
+    const positionToScroll: number =
+      window.scrollY +
+      (element as HTMLElement).getBoundingClientRect().top -
+      100;
+    useScrollTo({
+      positionToScroll,
+      delay: 200,
     });
   }, []);
 
