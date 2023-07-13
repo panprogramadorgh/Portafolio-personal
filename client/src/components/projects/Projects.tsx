@@ -1,54 +1,87 @@
-import { useState, useEffect, MouseEventHandler } from "react";
+import { useState, useEffect, MouseEventHandler, useRef } from "react";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
-import ProjectCard, { ProjectCardProps } from "./ProjectCard";
+import Card from "../generic/Card";
+// import ProjectCard, { ProjectCardProps } from "./ProjectCard";
 import "../../stylesheets/projects/Projects.css";
 
 const Projects = () => {
-  const [projectsData, setProjectData] = useState<ProjectCardProps[] | null>(
-    null
-  );
+  interface ProjectData {
+    data: {
+      title: string;
+      description: string;
+      image: string;
+      url?: string;
+    };
+  }
+  const [projectsData, setProjectData] = useState<ProjectData[] | null>(null);
+  const [projectCards, setProjectCards] = useState<
+    JSX.Element[] | string | null
+  >(null);
+  const bgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    window.addEventListener("click", projectCardUnfocus);
     fetch("http://localhost:3000/api/projects")
       .then((response) => response.json())
       .then((data) => setProjectData(data))
       .catch((error) => console.error(error));
+
+    /* */
+
+    if (projectsData === null) setProjectCards("fetching projects...");
+    else if (projectsData instanceof Array && projectsData.length === 0) {
+      setProjectCards("There is projects yet :[");
+    } else if (projectsData instanceof Array && projectsData.length > 0) {
+      const jsxArray = projectsData.map(({ data }, index) => (
+        <Card
+          key={index}
+          type="card"
+          className="projectCard"
+          onMouseEnter={handleMouseEnter}
+          onClick={() => {
+            window.open("", "_BLANK");
+          }}
+        >
+          <div
+            className="image-container"
+            style={{
+              backgroundImage: `url('http://localhost:3000/api/imgs/projects/${data.image}')`,
+            }}
+          ></div>
+          <div className="text-container">
+            <b className="title">{data.title}</b>
+            <p className="description">{data.description}</p>
+          </div>
+        </Card>
+      ));
+      setProjectCards(jsxArray);
+    }
   }, []);
 
-  const [bgVisible, setBgVisible] = useState<boolean>(false);
-  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = ({ target }) => {
-    (target as HTMLElement).classList.remove("unselected");
-    (target as HTMLElement).classList.add("selected");
-    setBgVisible(true);
+  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = () => {
+    if (bgRef.current) {
+      bgRef.current.style.animation = "fadein 0.35s ease";
+      bgRef.current.style.display = "block";
+    }
   };
 
-  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = ({ target }) => {
-    (target as HTMLElement).classList.remove("selected");
-    (target as HTMLElement).classList.add("unselected");
-    setBgVisible(false);
+  const projectCardUnfocus = () => {
+    if (bgRef.current) {
+      bgRef.current.style.animation = "fadeout 0.2s ease";
+    }
+    setTimeout(() => {
+      if (bgRef.current) {
+        bgRef.current.style.display = "none";
+      }
+    }, 180);
   };
-
-  let projectsContainerContent: string | JSX.Element[];
-  if (projectsData === null) projectsContainerContent = "fetching projects...";
-  else if (projectsData.length === 0) {
-    projectsContainerContent = "There is projects yet :[";
-  } else {
-    projectsContainerContent = projectsData.map(({ data }, index) => (
-      <ProjectCard
-        key={index}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        data={data}
-      />
-    ));
-  }
 
   return (
     <PageSection className="Projects">
-      {bgVisible ? <div className="background"></div> : null}
+      <div className="background" ref={bgRef}></div>
       <Title message="Here some of my projects" relevantWord="projects" />
-      <div className="projects-container">{projectsContainerContent}</div>
+      <div className="projects-container">{projectCards}</div>
     </PageSection>
   );
 };

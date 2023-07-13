@@ -8,12 +8,15 @@ interface Props {
 }
 
 const PageSection = ({ className = "", children }: Props) => {
-  const ref = useFadeinAnimation({
+  const useFadeinAnimationRef = useFadeinAnimation({
     animationTime: 1,
   });
 
   return (
-    <article ref={ref} className={`PageSection ${className}`.trim()}>
+    <article
+      ref={useFadeinAnimationRef}
+      className={`PageSection ${className}`.trim()}
+    >
       {children}
     </article>
   );
