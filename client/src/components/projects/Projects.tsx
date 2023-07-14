@@ -1,8 +1,7 @@
-import { useState, useEffect, MouseEventHandler, useRef } from "react";
+import { useState, useEffect } from "react";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import Card from "../generic/Card";
-// import ProjectCard, { ProjectCardProps } from "./ProjectCard";
 import "../../stylesheets/projects/Projects.css";
 
 const Projects = () => {
@@ -60,7 +59,7 @@ const Projects = () => {
 
   return (
     <PageSection className="Projects">
-      <Title message="Here some of my projects" relevantWord="projects" />
+      <Title message="Here some of my projects" relevantWords={["projects"]} />
       <div className="project-cards-container">{projectCards}</div>
     </PageSection>
   );

@@ -27,7 +27,7 @@ const Skills = () => {
   return (
     <PageSection className="Skills">
       <section className="skills-title-container">
-        <Title message="This are some of my skills" relevantWord="skills" />
+        <Title message="This are some of my skills" relevantWords={["skils"]} />
       </section>
       <section className="skills-cards-container">
         {skillsCardContainerContent}

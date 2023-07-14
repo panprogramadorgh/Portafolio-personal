@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useRef } from "react";
 import Card from "../generic/Card";
 import { VscArrowRight } from "react-icons/vsc";
 
@@ -9,23 +9,28 @@ export interface SkillCardProps {
     skillname: string;
     level: "begginer" | "medium" | "advanced";
     imageLogo: string;
-    onClickUrl?: string;
+    onClickUrl: string;
   };
 }
 
 const SkillCard = ({ data }: SkillCardProps) => {
-  const imgPath = `http://localhost:3000/api/imgs/skills/${data.imageLogo}.png`;
-  const possibleLevelColors = {
-    advanced: "#09f",
-    medium: "#bf4ff7",
-    begginer: "#ddd",
-  };
-  const handleClick = useCallback(() => {
-    if (data.onClickUrl) {
-      window.open(data.onClickUrl, "_BLANK");
-      return;
-    }
-  }, []);
+  interface ComponentInfo {
+    imgPath: string;
+    possibleLevelColors: {
+      advanced: `#${string}`;
+      medium: `#${string}`;
+      begginer: `#${string}`;
+    };
+  }
+  const componentInfoRef = useRef<ComponentInfo>({
+    imgPath: `http://localhost:3000/api/imgs/skills/${data.imageLogo}.png`,
+    possibleLevelColors: {
+      advanced: "#09f",
+      medium: "#bf4ff7",
+      begginer: "#ddd",
+    },
+  });
+
   return (
     <Card
       type="card"
@@ -36,18 +41,27 @@ const SkillCard = ({ data }: SkillCardProps) => {
           ? "medium"
           : ""
       }`.trim()}
-      onClick={handleClick}
+      onClick={() => {
+        window.open(data.onClickUrl, "_BLANK");
+      }}
     >
       <div className="skillname">
         Name <VscArrowRight />{" "}
         <div className="skillname-logo">
-          <img src={imgPath} alt="skillname-logo image" />
+          <img
+            src={componentInfoRef.current.imgPath}
+            alt="skillname-logo image"
+          />
           {data.skillname}
         </div>
       </div>
       <div className="level">
         Level <VscArrowRight />{" "}
-        <span style={{ color: possibleLevelColors[data.level] }}>
+        <span
+          style={{
+            color: componentInfoRef.current.possibleLevelColors[data.level],
+          }}
+        >
           {data.level}
         </span>
       </div>

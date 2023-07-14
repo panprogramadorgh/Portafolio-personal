@@ -182,7 +182,7 @@ const Contact = () => {
           {showWindow.message}
         </Card>
       ) : null}
-      <Title message="Here you can contact me" relevantWord="contact" />
+      <Title message="Here you can contact me" relevantWords={["contact"]} />
       <Card type="text">
         <input
           onChange={handleInputChange}
