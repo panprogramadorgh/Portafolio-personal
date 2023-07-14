@@ -18,33 +18,32 @@ const Projects = () => {
   const [projectCards, setProjectCards] = useState<
     JSX.Element[] | string | null
   >(null);
-  const bgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    window.addEventListener("click", projectCardUnfocus);
+    /* Recuperando los datos y actualizando el estado con ellos */
     fetch("http://localhost:3000/api/projects")
       .then((response) => response.json())
       .then((data) => setProjectData(data))
       .catch((error) => console.error(error));
+  }, []);
 
-    /* */
-
+  useEffect(() => {
+    // Configurando el estado de targetas en funcion de los datos obtenidos anteriormente
     if (projectsData === null) setProjectCards("fetching projects...");
-    else if (projectsData instanceof Array && projectsData.length === 0) {
+    else if (projectsData.length === 0)
       setProjectCards("There is projects yet :[");
-    } else if (projectsData instanceof Array && projectsData.length > 0) {
-      const jsxArray = projectsData.map(({ data }, index) => (
+    else {
+      const jsxArray: JSX.Element[] = projectsData.map(({ data }, index) => (
         <Card
           key={index}
           type="card"
-          className="projectCard"
-          onMouseEnter={handleMouseEnter}
+          className="project-card"
           onClick={() => {
             window.open("", "_BLANK");
           }}
         >
           <div
-            className="image-container"
+            className="div-image"
             style={{
               backgroundImage: `url('http://localhost:3000/api/imgs/projects/${data.image}')`,
             }}
@@ -57,31 +56,12 @@ const Projects = () => {
       ));
       setProjectCards(jsxArray);
     }
-  }, []);
-
-  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = () => {
-    if (bgRef.current) {
-      bgRef.current.style.animation = "fadein 0.35s ease";
-      bgRef.current.style.display = "block";
-    }
-  };
-
-  const projectCardUnfocus = () => {
-    if (bgRef.current) {
-      bgRef.current.style.animation = "fadeout 0.2s ease";
-    }
-    setTimeout(() => {
-      if (bgRef.current) {
-        bgRef.current.style.display = "none";
-      }
-    }, 180);
-  };
+  }, [projectsData]);
 
   return (
     <PageSection className="Projects">
-      <div className="background" ref={bgRef}></div>
       <Title message="Here some of my projects" relevantWord="projects" />
-      <div className="projects-container">{projectCards}</div>
+      <div className="project-cards-container">{projectCards}</div>
     </PageSection>
   );
 };

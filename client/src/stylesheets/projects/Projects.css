@@ -1,36 +1,25 @@
-.Projects .background {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #0004;
-  backdrop-filter: blur(5px);
-  display: none;
+.Projects .project-cards-container {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
-.ProjectCard {
+.Projects .project-cards-container .project-card {
   padding: 0;
   margin: 10px;
   border-radius: 1rem;
 }
 
-.ProjectCard .image-container {
+.Projects .project-cards-container .project-card .div-image {
   width: 100%;
-  height: 100px;
+  height: 200px;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   background-size: contain;
 }
 
-.ProjectCard .text-container {
+.Projects .project-cards-container .project-card .text-container {
   padding: 35px;
   text-align: left;
-}
-
-.Projects .projects-container {
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
 }
