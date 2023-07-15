@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import SkillCard, { SkillCardProps } from "./SkillCard";
-import ENV from "../../data/env";
+import ENV from "../../env";
 
 import "../../stylesheets/skills/Skills.css";
 

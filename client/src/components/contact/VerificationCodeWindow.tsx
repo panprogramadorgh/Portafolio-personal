@@ -1,19 +1,34 @@
-import { useCallback } from "react";
+import { useCallback, useState, ChangeEventHandler, useContext } from "react";
+// import CryptoJS from "crypto-js";
+import useScrollTo from "../../hooks/useScrollTo";
 import { VscChromeClose } from "react-icons/vsc";
-import { useState, ChangeEventHandler } from "react";
+import {
+  ContactContext,
+  ShowWindowStates,
+  ShowWindow,
+  Inputs,
+} from "./Contact";
 import Card from "../generic/Card";
 import Button from "../generic/Button";
+import ENV from "../../env";
 import "../../stylesheets/contact/VerificationCodeWindow.css";
 
-interface Props {
-  handleVerfyButtonClick: (inputValue: string) => Promise<boolean>;
-  handleCloseButtonClick: () => void;
-}
+const VerificationCodeWindow = () => {
+  const {
+    updateShowWindowState,
+    setVerificationCodeWindow,
+    inputs,
+    setInputs,
+  }: {
+    updateShowWindowState: ({
+      state,
+      message,
+    }: Omit<ShowWindow, "windowFadeoutAnimation">) => Promise<void>;
+    setVerificationCodeWindow: (newValue: string | null) => void;
+    inputs: Inputs;
+    setInputs: (newInputs: Inputs) => void;
+  } = useContext(ContactContext) as any;
 
-const VerificationCodeWindow = ({
-  handleVerfyButtonClick,
-  handleCloseButtonClick,
-}: Props) => {
   const [input, setInput] = useState<string>("");
   const [invalidCode, setInvalidCode] = useState<boolean>(false);
 
@@ -23,11 +38,69 @@ const VerificationCodeWindow = ({
       setInvalidCode(false);
     }, []);
 
+  const handleVerifyButtonClick = async (inputValue: string) => {
+    // FIXME: Arreglar sistema des encriptacion
+    // console.log(
+    //   CryptoJS.AES.decrypt(
+    //     verificationCodeWindow as string,
+    //     ENV.ENCRYPTION_KEY
+    //   ).toString(CryptoJS.enc.Utf8)
+    // );
+    if (inputValue === "12345") {
+      try {
+        await fetch(`${ENV.SERVER_DOMAIN}/api/contact-request`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(inputs),
+        });
+      } catch {
+        console.error("Failed to send the contact request !");
+        await updateShowWindowState({
+          state: ShowWindowStates.contactRequestFailed,
+          message: <>Failed to send the contact request !</>,
+        });
+      }
+
+      setInputs({
+        name: "",
+        email: "",
+        message: "",
+      });
+      setVerificationCodeWindow(null);
+      updateShowWindowState({
+        state: ShowWindowStates.contactRequestAccepted,
+        message: <>Contact request accepted !</>,
+      });
+
+      useScrollTo({
+        positionToScroll: 0,
+        delay: 500,
+      });
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div className="VerificationCodeWindow">
       <Card type="text">
         <div className="close-window-button-container">
-          <VscChromeClose onClick={handleCloseButtonClick} />
+          <VscChromeClose
+            onClick={async () => {
+              setInputs({
+                name: "",
+                email: "",
+                message: "",
+              });
+              setVerificationCodeWindow(null);
+              await updateShowWindowState({
+                state: ShowWindowStates.contactRequestFailed,
+                message: <>Email verification canceled</>,
+              });
+            }}
+          />
         </div>
         <h2 className="title">Type here the verification code</h2>
         <p className="subtitle">Check your email and paste the code here</p>
@@ -41,7 +114,7 @@ const VerificationCodeWindow = ({
         <Button
           hasArrow
           callback={useCallback(async () => {
-            const codeIsCorrect = await handleVerfyButtonClick(input);
+            const codeIsCorrect = await handleVerifyButtonClick(input);
             if (!codeIsCorrect) {
               setInput("");
               setInvalidCode(true);

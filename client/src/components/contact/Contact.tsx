@@ -1,20 +1,53 @@
-import { useState, ChangeEventHandler, ReactNode, useCallback } from "react";
-import CryptoJS from "crypto-js";
-import useScrollTo from "../../hooks/useScrollTo";
-import VerificationCodeWindow from "../contact/VerificationCodeWindow";
+import {
+  useState,
+  ChangeEventHandler,
+  ReactNode,
+  useCallback,
+  createContext,
+} from "react";
+import VerificationCodeWindow from "./VerificationCodeWindow";
+import Window from "./Window";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import Card from "../generic/Card";
 import Button from "../generic/Button";
-import ENV from "../../data/env";
+import ENV from "../../env";
 import "../../stylesheets/contact/Contact.css";
 
+export interface Inputs {
+  name: string;
+  email: string;
+  message: string;
+}
+
+export const enum ShowWindowStates {
+  contactRequestSended,
+  contactRequestAccepted,
+  contactRequestFailed,
+  hiddenWindow,
+}
+export interface ShowWindow {
+  state: ShowWindowStates;
+  windowFadeoutAnimation: boolean;
+  message?: ReactNode;
+}
+
+export type ContactContextValue = {
+  verificationCodeWindow: string | null;
+  setVerificationCodeWindow: (newValue: string | null) => void;
+  showWindow: ShowWindow;
+  setShowWindow: (newValue: ShowWindow) => void;
+  inputs: Inputs;
+  setInputs: (newInputs: Inputs) => void;
+  updateShowWindowState: ({
+    state,
+    message,
+  }: Omit<ShowWindow, "windowFadeoutAnimation">) => Promise<void>;
+} | null;
+
+export const ContactContext = createContext<ContactContextValue>(null);
+
 const Contact = () => {
-  type Inputs = {
-    name: string;
-    email: string;
-    message: string;
-  };
   const [inputs, setInputs] = useState<Inputs>({
     name: "",
     email: "",
@@ -25,46 +58,38 @@ const Contact = () => {
     string | null
   >(null);
 
-  const enum ShowWindowState {
-    contactRequestSended,
-    contactRequestAccepted,
-    contactRequestFailed,
-    hiddenWindow,
-  }
-  interface ShowWindow {
-    state: ShowWindowState;
-    message?: ReactNode;
-  }
   const [showWindow, setShowWindow] = useState<ShowWindow>({
-    state: ShowWindowState.hiddenWindow,
+    state: ShowWindowStates.hiddenWindow,
+    windowFadeoutAnimation: false,
   });
 
-  const [windowFadeoutAnimation, setWindowFadeoutAnimation] =
-    useState<boolean>(false);
-
   const updateShowWindowState = useCallback(
-    async ({ state, message }: ShowWindow) => {
+    async ({ state, message }: Omit<ShowWindow, "windowFadeoutAnimation">) => {
       setShowWindow({
         state,
+        windowFadeoutAnimation: false,
         message,
       });
       await new Promise((resolve) => {
         setTimeout(resolve, 5000);
       });
-      setWindowFadeoutAnimation(true);
+      setShowWindow(
+        Object.assign(showWindow, { windowFadeoutAnimation: true })
+      );
       await new Promise((resolve) => {
         setTimeout(resolve, 150);
       });
       setShowWindow({
-        state: ShowWindowState.hiddenWindow,
+        state: ShowWindowStates.hiddenWindow,
+        windowFadeoutAnimation: true,
       });
-      setWindowFadeoutAnimation(false);
+      Object.assign(showWindow, { windowFadeoutAnimation: true });
     },
     []
   );
 
   const handleButtonClick = useCallback(async () => {
-    if (showWindow.state !== ShowWindowState.hiddenWindow) return;
+    if (showWindow.state !== ShowWindowStates.hiddenWindow) return;
     try {
       const response = await fetch(
         `${ENV.SERVER_DOMAIN}/api/email-verification`,
@@ -85,8 +110,8 @@ const Contact = () => {
       updateShowWindowState({
         state:
           data.status === 200
-            ? ShowWindowState.contactRequestSended
-            : ShowWindowState.contactRequestFailed,
+            ? ShowWindowStates.contactRequestSended
+            : ShowWindowStates.contactRequestFailed,
         message: <>{data.message}</>,
       });
       if (data.status === 500 && !data.verificationCode) {
@@ -111,84 +136,22 @@ const Contact = () => {
 
   return (
     <PageSection className="Contact">
-      {verificationCodeWindow !== null ? (
-        <VerificationCodeWindow
-          handleCloseButtonClick={() => {
-            setInputs({
-              name: "",
-              email: "",
-              message: "",
-            });
-            setVerificationCodeWindow(null);
-            updateShowWindowState({
-              state: ShowWindowState.contactRequestFailed,
-              message: <>Email verification canceled</>,
-            });
-          }}
-          handleVerfyButtonClick={async (inputValue: string) => {
-            console.log(
-              CryptoJS.AES.decrypt(
-                verificationCodeWindow as string,
-                ENV.ENCRYPTION_KEY
-              ).toString(CryptoJS.enc.Utf8)
-            );
-            if (inputValue === "12345") {
-              try {
-                await fetch(`${ENV.SERVER_DOMAIN}/api/contact-request`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(inputs),
-                });
-              } catch {
-                console.error("Failed to send the contact request !");
-                updateShowWindowState({
-                  state: ShowWindowState.contactRequestFailed,
-                  message: <>Failed to send the contact request !</>,
-                });
-              }
-
-              setInputs({
-                name: "",
-                email: "",
-                message: "",
-              });
-              setVerificationCodeWindow(null);
-              updateShowWindowState({
-                state: ShowWindowState.contactRequestAccepted,
-                message: <>Contact request accepted !</>,
-              });
-
-              useScrollTo({
-                positionToScroll: 0,
-                delay: 500,
-              });
-
-              // lo que retorna la funcion solamente tiene un proposito informativo para el usuario (muestra una targeta)
-              return true;
-            }
-            return false;
-          }}
-        />
-      ) : null}
-      {showWindow.state !== ShowWindowState.hiddenWindow ? (
-        <Card
-          animation={
-            windowFadeoutAnimation ? "fadeout-card 0.2s ease-in-out" : undefined
-          }
-          type="card"
-          className={`window ${
-            showWindow.state === ShowWindowState.contactRequestSended
-              ? "contact-request-sended"
-              : showWindow.state === ShowWindowState.contactRequestAccepted
-              ? "contact-request-accepted"
-              : "contact-request-failed"
-          }`.trim()}
-        >
-          {showWindow.message}
-        </Card>
-      ) : null}
+      <ContactContext.Provider
+        value={{
+          verificationCodeWindow,
+          setVerificationCodeWindow,
+          showWindow,
+          setShowWindow,
+          inputs,
+          setInputs,
+          updateShowWindowState,
+        }}
+      >
+        {/* Ventana de verificacion de codigo */}
+        {verificationCodeWindow !== null ? <VerificationCodeWindow /> : null}
+        {/* Ventana emergenete */}
+        {showWindow.state !== ShowWindowStates.hiddenWindow ? <Window /> : null}
+      </ContactContext.Provider>
       <Title message="Here you can contact me" relevantWords={["contact"]} />
       <Card type="text">
         <input
