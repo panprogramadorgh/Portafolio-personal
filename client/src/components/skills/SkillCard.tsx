@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import Card from "../generic/Card";
 import { VscArrowRight } from "react-icons/vsc";
-
+import ENV from "../../data/env";
 import "../../stylesheets/skills/SkillCard.css";
 
 export interface SkillCardProps {
@@ -23,7 +23,7 @@ const SkillCard = ({ data }: SkillCardProps) => {
     };
   }
   const componentInfoRef = useRef<ComponentInfo>({
-    imgPath: `http://localhost:3000/api/imgs/skills/${data.imageLogo}.png`,
+    imgPath: `${ENV.SERVER_DOMAIN}/api/imgs/skills/${data.imageLogo}.png`,
     possibleLevelColors: {
       advanced: "#09f",
       medium: "#bf4ff7",
@@ -49,6 +49,12 @@ const SkillCard = ({ data }: SkillCardProps) => {
         Name <VscArrowRight />{" "}
         <div className="skillname-logo">
           <img
+            style={{
+              animation:
+                data.imageLogo === "react-logo"
+                  ? "react-logo-spin 10s linear infinite"
+                  : undefined,
+            }}
             src={componentInfoRef.current.imgPath}
             alt="skillname-logo image"
           />

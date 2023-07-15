@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import SkillCard, { SkillCardProps } from "./SkillCard";
+import ENV from "../../data/env";
+
 import "../../stylesheets/skills/Skills.css";
 
 const Skills = () => {
   const [skillsData, setSkillsData] = useState<SkillCardProps[] | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/skills")
+    fetch(`${ENV.SERVER_DOMAIN}/api/skills`)
       .then((response) => response.json())
       .then((data) => setSkillsData(data))
       .catch((error) => console.error(error));
@@ -27,7 +29,7 @@ const Skills = () => {
   return (
     <PageSection className="Skills">
       <section className="skills-title-container">
-        <Title message="This are some of my skills" relevantWords={["skils"]} />
+        <Title message="This are some of my skills" relevantWords={["skills"]} />
       </section>
       <section className="skills-cards-container">
         {skillsCardContainerContent}

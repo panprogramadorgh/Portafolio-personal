@@ -6,7 +6,6 @@ body {
   background-repeat: repeat;
   background-position: -150px 0;
   background-size: 30rem;
-  /* background-attachment: fixed; */
   color: #ddd;
   overflow-x: hidden;
 }

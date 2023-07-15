@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+import CryptoJS from "crypto-js";
 import validator from "email-validator";
 import Contact from "../models/contact.model.js";
 import { createVerificationCode, generateViewFromCode } from "../func/utils.js";
@@ -10,6 +11,7 @@ import { Router } from "express";
 const indexRouter = Router();
 
 indexRouter.get("/skills", async (req, res) => {
+  /* TODO: Ocultar id de los documentos */
   try {
     const skills = await Skill.find();
     res.status(200).json(skills);
@@ -19,6 +21,7 @@ indexRouter.get("/skills", async (req, res) => {
 });
 
 indexRouter.get("/projects", async (req, res) => {
+  /* TODO: Ocultar id de los documentos */
   try {
     const projects = await Project.find();
     res.status(200).json(projects);
@@ -39,6 +42,7 @@ indexRouter.post("/contact-request", async (req, res) => {
 });
 
 indexRouter.post("/email-verification", async (req, res) => {
+  /* Ocultar el codigo de la respuesta, encriptandolo o hacienndo lo que sea posible */
   const { body } = req;
   const {
     name: unTrimmedName,
@@ -49,6 +53,10 @@ indexRouter.post("/email-verification", async (req, res) => {
   const email = unTrimmedEmail.trim();
   const message = unTrimmedMessage.trim();
   const verificationCode = createVerificationCode(5);
+  const encryptedVerificationCode = CryptoJS.AES.encrypt(
+    verificationCode.toString(),
+    process.env.ENCRYPTION_KEY
+  ).toString();
   try {
     // comprueba si faltan campos o si el email esta duplicado en la coleccion
     if ([name, email, message].includes(""))
@@ -78,7 +86,7 @@ indexRouter.post("/email-verification", async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "barreroalvaro2007@gmail.com",
+        user: process.env.NODEMAILER_USER,
         pass: process.env.NODEMAILER_PASS,
       },
     });
@@ -87,7 +95,7 @@ indexRouter.post("/email-verification", async (req, res) => {
     // genera la view y manda el mail
     const view = generateViewFromCode({ verificationCode, name });
     const nodemailerMessage = {
-      from: "barreroalvaro2007@gmail.com",
+      from: process.env.NODEMAILER_USER,
       to: email,
       subject: "Contact request | Verification code",
       html: view,
@@ -98,7 +106,7 @@ indexRouter.post("/email-verification", async (req, res) => {
     res.status(200).json({
       status: 200,
       message: "Email verification sended !",
-      verificationCode,
+      encryptedVerificationCode,
     });
   } catch (error) {
     res.status(500).json({ ...error, status: 500 });

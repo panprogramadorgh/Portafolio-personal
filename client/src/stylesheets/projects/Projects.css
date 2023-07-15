@@ -6,20 +6,34 @@
 }
 
 .Projects .project-cards-container .project-card {
+  width: 300px;
   padding: 0;
   margin: 10px;
   border-radius: 1rem;
 }
 
-.Projects .project-cards-container .project-card .div-image {
-  width: 100%;
-  height: 200px;
+.Projects .project-cards-container .project-card .image-container {
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   background-size: contain;
 }
+.Projects .project-cards-container .project-card .image-container img {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
 
 .Projects .project-cards-container .project-card .text-container {
-  padding: 35px;
+  padding: 10px 30px 30px 30px;
   text-align: left;
+}
+
+.Projects .project-cards-container .project-card .text-container .title {
+  font-size: 1.7rem;
+  margin-bottom: 20px;
+}
+
+.Projects .project-cards-container .project-card .text-container .description {
+  font-size: 0.9rem;
 }

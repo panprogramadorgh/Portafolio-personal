@@ -9,7 +9,7 @@ interface Props {
 
 const PageSection = ({ className = "", children }: Props) => {
   const useFadeinAnimationRef = useFadeinAnimation({
-    animationTime: 1,
+    animationTime: 1.5,
   });
 
   return (

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import Card from "../generic/Card";
+import ENV from "../../data/env";
 import "../../stylesheets/projects/Projects.css";
 
 const Projects = () => {
@@ -20,7 +21,7 @@ const Projects = () => {
 
   useEffect(() => {
     /* Recuperando los datos y actualizando el estado con ellos */
-    fetch("http://localhost:3000/api/projects")
+    fetch(`${ENV.SERVER_DOMAIN}/api/projects`)
       .then((response) => response.json())
       .then((data) => setProjectData(data))
       .catch((error) => console.error(error));
@@ -38,17 +39,17 @@ const Projects = () => {
           type="card"
           className="project-card"
           onClick={() => {
-            window.open("", "_BLANK");
+            window.open(data.url, "_BLANK");
           }}
         >
-          <div
-            className="div-image"
-            style={{
-              backgroundImage: `url('http://localhost:3000/api/imgs/projects/${data.image}')`,
-            }}
-          ></div>
+          <div className="image-container">
+            <img
+              src={`${ENV.SERVER_DOMAIN}/api/imgs/projects/${data.image}`}
+              alt={`${data.title}-image`}
+            />
+          </div>
           <div className="text-container">
-            <b className="title">{data.title}</b>
+            <h4 className="title">{data.title}</h4>
             <p className="description">{data.description}</p>
           </div>
         </Card>

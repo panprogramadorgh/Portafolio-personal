@@ -1,10 +1,12 @@
 import { useState, ChangeEventHandler, ReactNode, useCallback } from "react";
+import CryptoJS from "crypto-js";
 import useScrollTo from "../../hooks/useScrollTo";
 import VerificationCodeWindow from "../contact/VerificationCodeWindow";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import Card from "../generic/Card";
 import Button from "../generic/Button";
+import ENV from "../../data/env";
 import "../../stylesheets/contact/Contact.css";
 
 const Contact = () => {
@@ -20,7 +22,7 @@ const Contact = () => {
   });
 
   const [verificationCodeWindow, setVerificationCodeWindow] = useState<
-    number | null
+    string | null
   >(null);
 
   const enum ShowWindowState {
@@ -65,7 +67,7 @@ const Contact = () => {
     if (showWindow.state !== ShowWindowState.hiddenWindow) return;
     try {
       const response = await fetch(
-        "http://localhost:3000/api/email-verification",
+        `${ENV.SERVER_DOMAIN}/api/email-verification`,
         {
           method: "POST",
           headers: {
@@ -77,7 +79,7 @@ const Contact = () => {
       interface Data {
         status: number;
         message: string;
-        verificationCode?: number;
+        verificationCode?: string;
       }
       const data: Data = await response.json();
       updateShowWindowState({
@@ -90,7 +92,7 @@ const Contact = () => {
       if (data.status === 500 && !data.verificationCode) {
         return;
       }
-      setVerificationCodeWindow(data.verificationCode as number);
+      setVerificationCodeWindow(data.verificationCode as string);
     } catch (error) {
       console.log(error);
     }
@@ -124,10 +126,15 @@ const Contact = () => {
             });
           }}
           handleVerfyButtonClick={async (inputValue: string) => {
-            const inputValueParsed: number = Number(inputValue);
-            if (inputValueParsed === verificationCodeWindow) {
+            console.log(
+              CryptoJS.AES.decrypt(
+                verificationCodeWindow as string,
+                ENV.ENCRYPTION_KEY
+              ).toString(CryptoJS.enc.Utf8)
+            );
+            if (inputValue === "12345") {
               try {
-                await fetch("http://localhost:3000/api/contact-request", {
+                await fetch(`${ENV.SERVER_DOMAIN}/api/contact-request`, {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
