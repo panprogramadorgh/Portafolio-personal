@@ -1,5 +1,5 @@
 import { useCallback, useState, ChangeEventHandler, useContext } from "react";
-// import CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js";
 import useScrollTo from "../../hooks/useScrollTo";
 import { VscChromeClose } from "react-icons/vsc";
 import {
@@ -16,6 +16,7 @@ import "../../stylesheets/contact/VerificationCodeWindow.css";
 const VerificationCodeWindow = () => {
   const {
     updateShowWindowState,
+    verificationCodeWindow,
     setVerificationCodeWindow,
     inputs,
     setInputs,
@@ -24,6 +25,7 @@ const VerificationCodeWindow = () => {
       state,
       message,
     }: Omit<ShowWindow, "windowFadeoutAnimation">) => Promise<void>;
+    verificationCodeWindow: string | null;
     setVerificationCodeWindow: (newValue: string | null) => void;
     inputs: Inputs;
     setInputs: (newInputs: Inputs) => void;
@@ -40,13 +42,15 @@ const VerificationCodeWindow = () => {
 
   const handleVerifyButtonClick = async (inputValue: string) => {
     // FIXME: Arreglar sistema des encriptacion
-    // console.log(
-    //   CryptoJS.AES.decrypt(
-    //     verificationCodeWindow as string,
-    //     ENV.ENCRYPTION_KEY
-    //   ).toString(CryptoJS.enc.Utf8)
-    // );
-    if (inputValue === "12345") {
+
+    const verificationCode = CryptoJS.AES.decrypt(
+      verificationCodeWindow as string,
+      ENV.ENCRYPTION_KEY
+    ).toString(CryptoJS.enc.Utf8);
+
+    console.log(verificationCode);
+
+    if (inputValue === verificationCode) {
       try {
         await fetch(`${ENV.SERVER_DOMAIN}/api/contact/request`, {
           method: "POST",

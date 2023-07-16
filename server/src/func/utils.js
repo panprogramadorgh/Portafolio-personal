@@ -71,7 +71,7 @@ export function generateViewFromCode({ verificationCode, name }) {
               padding: 0 20px;
               color: #09f;
             "
-            >12345</span
+            >${verificationCode}</span
           >
         </p>
       </main>

@@ -104,9 +104,10 @@ const Contact = () => {
       interface Data {
         status: number;
         message: string;
-        verificationCode?: string;
+        encryptedVerificationCode?: string;
       }
       const data: Data = await response.json();
+      console.log(data);
       updateShowWindowState({
         state:
           data.status === 200
@@ -114,10 +115,10 @@ const Contact = () => {
             : ShowWindowStates.contactRequestFailed,
         message: <>{data.message}</>,
       });
-      if (data.status === 500 && !data.verificationCode) {
+      if (data.status === 500 && !data.encryptedVerificationCode) {
         return;
       }
-      setVerificationCodeWindow(data.verificationCode as string);
+      setVerificationCodeWindow(data.encryptedVerificationCode as string);
     } catch (error) {
       console.error(error);
       updateShowWindowState({
