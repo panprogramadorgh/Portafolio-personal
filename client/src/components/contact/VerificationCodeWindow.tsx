@@ -1,13 +1,9 @@
 import { useCallback, useState, ChangeEventHandler, useContext } from "react";
 import CryptoJS from "crypto-js";
+import { ContactContext, ShowWindowStates } from "./Contact";
 import useScrollTo from "../../hooks/useScrollTo";
+// components
 import { VscChromeClose } from "react-icons/vsc";
-import {
-  ContactContext,
-  ShowWindowStates,
-  ShowWindow,
-  Inputs,
-} from "./Contact";
 import Card from "../generic/Card";
 import Button from "../generic/Button";
 import ENV from "../../../env";
@@ -20,16 +16,7 @@ const VerificationCodeWindow = () => {
     setVerificationCodeWindow,
     inputs,
     setInputs,
-  }: {
-    updateShowWindowState: ({
-      state,
-      message,
-    }: Omit<ShowWindow, "windowFadeoutAnimation">) => Promise<void>;
-    verificationCodeWindow: string | null;
-    setVerificationCodeWindow: (newValue: string | null) => void;
-    inputs: Inputs;
-    setInputs: (newInputs: Inputs) => void;
-  } = useContext(ContactContext) as any;
+  } = useContext(ContactContext)!;
 
   const [input, setInput] = useState<string>("");
   const [invalidCode, setInvalidCode] = useState<boolean>(false);
@@ -41,8 +28,6 @@ const VerificationCodeWindow = () => {
     }, []);
 
   const handleVerifyButtonClick = async (inputValue: string) => {
-    // FIXME: Arreglar sistema des encriptacion
-
     const verificationCode = CryptoJS.AES.decrypt(
       verificationCodeWindow as string,
       ENV.ENCRYPTION_KEY
@@ -61,7 +46,7 @@ const VerificationCodeWindow = () => {
         });
       } catch {
         console.error("Failed to send the contact request !");
-        await updateShowWindowState({
+        updateShowWindowState({
           state: ShowWindowStates.contactRequestFailed,
           message: <>Failed to send the contact request !</>,
         });

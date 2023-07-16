@@ -2,49 +2,7 @@
   align-items: center;
 }
 
-.Contact .Card.window {
-  position: fixed;
-  top: 0;
-  left: 0;
-  text-align: left;
-  width: auto;
-  padding: 20px;
-  margin: 20px;
-  animation: fadein 0.2s ease-in-out;
-  z-index: 100;
-}
-
-.Contact .Card.window span {
-  display: block;
-}
-
-.Contact .Card.window.contact-request-sended {
-  background-color: #0099ff20;
-  border-color: #0099ff80;
-}
-
-.Contact .Card.window.contact-request-accepted {
-  background-color: rgba(48, 194, 48, 0.158);
-  border-color: rgba(13, 212, 13, 0.418);
-}
-
-.Contact .Card.window.contact-request-failed {
-  background-color: #ff000010;
-  border-color: #ff000050;
-}
-
-.Contact .Card {
+.Contact .Card.form {
   max-width: 1000px;
   padding: 50px;
-}
-
-@keyframes fadeout-card {
-  from {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-  to {
-    opacity: 0;
-    transform: translate(-200px, 0);
-  }
 }

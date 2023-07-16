@@ -1,0 +1,41 @@
+.Window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: left;
+  width: auto;
+  padding: 20px;
+  margin: 20px;
+  animation: fadein 0.2s ease-in-out;
+  z-index: 100;
+}
+
+.Window span {
+  display: block;
+}
+
+.Window.processing-contact-request {
+  background-color: #0099ff20;
+  border-color: #0099ff80;
+}
+
+.Window.contact-request-accepted {
+  background-color: rgba(48, 194, 48, 0.158);
+  border-color: rgba(13, 212, 13, 0.418);
+}
+
+.Window.contact-request-failed {
+  background-color: #ff000010;
+  border-color: #ff000050;
+}
+
+@keyframes fadeout-window {
+  from {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-200px, 0);
+  }
+}

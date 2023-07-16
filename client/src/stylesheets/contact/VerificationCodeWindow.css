@@ -13,6 +13,10 @@
   animation: fadein 0.2s ease-in-out;
 }
 
+.VerificationCodeWindow .Card .title {
+  padding-top: 20px;
+}
+
 .VerificationCodeWindow .Card .input {
   margin: 30px 0;
   margin-top: 50px;

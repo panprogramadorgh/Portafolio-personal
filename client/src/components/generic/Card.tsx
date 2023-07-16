@@ -1,4 +1,4 @@
-import { ReactNode, MouseEventHandler, forwardRef } from "react";
+import { ReactNode, MouseEventHandler, forwardRef, CSSProperties } from "react";
 import "../../stylesheets/generic/Card.css";
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
   type: "text" | "card";
   animation?: `${string} ${number}s ${string}`;
   ref?: any;
+  style?: CSSProperties;
 }
 const Card = forwardRef(
   (
@@ -21,6 +22,7 @@ const Card = forwardRef(
       onMouseLeave,
       type,
       animation,
+      style,
     }: Props,
     ref?: any
   ) => {
@@ -31,11 +33,14 @@ const Card = forwardRef(
         onMouseLeave={onMouseLeave}
         ref={ref}
         className={`Card ${className ? className : ""}`.trim()}
-        style={{
-          cursor: type === "card" ? "pointer" : "default",
-          userSelect: type === "card" ? "none" : "auto",
-          animation: animation ? animation : "",
-        }}
+        style={Object.assign(
+          {
+            cursor: type === "card" ? "pointer" : "default",
+            userSelect: type === "card" ? "none" : "auto",
+            animation: animation ? animation : "",
+          },
+          style
+        )}
       >
         {children}
       </div>

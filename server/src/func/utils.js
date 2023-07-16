@@ -1,13 +1,16 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-/* FIXME: Arreglar esta funcion, a veces debuelve una cifra menos */
 export function createVerificationCode(length) {
+  const randint = (index) => {
+    const n = Math.floor(Math.random() * 10);
+    if (index !== 0) return n;
+    if (n === 0) return randint(index);
+    else return n;
+  };
   const code = new Array(length)
     .fill(null)
-    .map(() => {
-      return Math.floor(Math.random() * 10);
-    })
+    .map((_, index) => randint(index))
     .join("");
   return Number(code);
 }

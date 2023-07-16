@@ -1,10 +1,16 @@
 import {
   useState,
   ChangeEventHandler,
-  ReactNode,
   useCallback,
   createContext,
 } from "react";
+import {
+  ContactContextInterface,
+  Inputs,
+  ShowWindow,
+  UpdateShowWindowState,
+} from "../../types/contact.d";
+// componentes
 import VerificationCodeWindow from "./VerificationCodeWindow";
 import Window from "./Window";
 import Title from "../generic/Title";
@@ -14,38 +20,16 @@ import Button from "../generic/Button";
 import ENV from "../../../env";
 import "../../stylesheets/contact/Contact.css";
 
-export interface Inputs {
-  name: string;
-  email: string;
-  message: string;
-}
+export const ContactContext = createContext<ContactContextInterface | null>(
+  null
+);
 
 export const enum ShowWindowStates {
-  contactRequestSended,
+  hiddenWindow,
+  processingContactRequest,
   contactRequestAccepted,
   contactRequestFailed,
-  hiddenWindow,
 }
-export interface ShowWindow {
-  state: ShowWindowStates;
-  windowFadeoutAnimation: boolean;
-  message?: ReactNode;
-}
-
-export type ContactContextValue = {
-  verificationCodeWindow: string | null;
-  setVerificationCodeWindow: (newValue: string | null) => void;
-  showWindow: ShowWindow;
-  setShowWindow: (newValue: ShowWindow) => void;
-  inputs: Inputs;
-  setInputs: (newInputs: Inputs) => void;
-  updateShowWindowState: ({
-    state,
-    message,
-  }: Omit<ShowWindow, "windowFadeoutAnimation">) => Promise<void>;
-} | null;
-
-export const ContactContext = createContext<ContactContextValue>(null);
 
 const Contact = () => {
   const [inputs, setInputs] = useState<Inputs>({
@@ -64,7 +48,7 @@ const Contact = () => {
   });
 
   const updateShowWindowState = useCallback(
-    async ({ state, message }: Omit<ShowWindow, "windowFadeoutAnimation">) => {
+    async ({ state, message }: UpdateShowWindowState) => {
       setShowWindow({
         state,
         windowFadeoutAnimation: false,
@@ -73,17 +57,14 @@ const Contact = () => {
       await new Promise((resolve) => {
         setTimeout(resolve, 3000);
       });
-      setShowWindow(
-        Object.assign(showWindow, { windowFadeoutAnimation: true })
-      );
+      setShowWindow({ ...showWindow, windowFadeoutAnimation: true });
       await new Promise((resolve) => {
         setTimeout(resolve, 150);
       });
       setShowWindow({
         state: ShowWindowStates.hiddenWindow,
-        windowFadeoutAnimation: true,
+        windowFadeoutAnimation: false,
       });
-      Object.assign(showWindow, { windowFadeoutAnimation: true });
     },
     []
   );
@@ -107,11 +88,10 @@ const Contact = () => {
         encryptedVerificationCode?: string;
       }
       const data: Data = await response.json();
-      console.log(data);
       updateShowWindowState({
         state:
           data.status === 200
-            ? ShowWindowStates.contactRequestSended
+            ? ShowWindowStates.processingContactRequest
             : ShowWindowStates.contactRequestFailed,
         message: <>{data.message}</>,
       });
@@ -145,20 +125,22 @@ const Contact = () => {
         value={{
           verificationCodeWindow,
           setVerificationCodeWindow,
+
           showWindow,
           setShowWindow,
+
           inputs,
           setInputs,
+
           updateShowWindowState,
         }}
       >
         {/* Ventana de verificacion de codigo */}
         {verificationCodeWindow !== null ? <VerificationCodeWindow /> : null}
-        {/* Ventana emergenete */}
-        {showWindow.state !== ShowWindowStates.hiddenWindow ? <Window /> : null}
+        <Window />
       </ContactContext.Provider>
       <Title message="Here you can contact me" relevantWords={["contact"]} />
-      <Card type="text">
+      <Card className="form" type="text">
         <input
           onChange={handleInputChange}
           value={inputs["name"]}
