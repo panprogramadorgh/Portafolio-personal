@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import Card from "../generic/Card";
-import ENV from "../../env";
+import ENV from "../../../env";
 import "../../stylesheets/projects/Projects.css";
 
 const Projects = () => {
@@ -14,7 +14,10 @@ const Projects = () => {
       url?: string;
     };
   }
-  const [projectsData, setProjectData] = useState<ProjectData[] | null>(null);
+  const [projectsData, setProjectData] = useState<{
+    status: number;
+    message: ProjectData[] | string;
+  } | null>(null);
   const [projectCards, setProjectCards] = useState<
     JSX.Element[] | string | null
   >(null);
@@ -24,16 +27,23 @@ const Projects = () => {
     fetch(`${ENV.SERVER_DOMAIN}/api/projects`)
       .then((response) => response.json())
       .then((data) => setProjectData(data))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setProjectCards("Something went wrong connecting to the server !");
+      });
   }, []);
 
   useEffect(() => {
     // Configurando el estado de targetas en funcion de los datos obtenidos anteriormente
     if (projectsData === null) setProjectCards("fetching projects...");
-    else if (projectsData.length === 0)
+    else if (projectsData.status !== 200)
+      setProjectCards(projectsData.message as string);
+    else if (projectsData.message.length === 0)
       setProjectCards("There is projects yet :[");
     else {
-      const jsxArray: JSX.Element[] = projectsData.map(({ data }, index) => (
+      const jsxArray: JSX.Element[] = (
+        projectsData.message as ProjectData[]
+      ).map(({ data }, index) => (
         <Card
           key={index}
           type="card"

@@ -11,7 +11,7 @@ import Title from "../generic/Title";
 import PageSection from "../generic/PageSection";
 import Card from "../generic/Card";
 import Button from "../generic/Button";
-import ENV from "../../env";
+import ENV from "../../../env";
 import "../../stylesheets/contact/Contact.css";
 
 export interface Inputs {
@@ -71,7 +71,7 @@ const Contact = () => {
         message,
       });
       await new Promise((resolve) => {
-        setTimeout(resolve, 5000);
+        setTimeout(resolve, 3000);
       });
       setShowWindow(
         Object.assign(showWindow, { windowFadeoutAnimation: true })
@@ -92,7 +92,7 @@ const Contact = () => {
     if (showWindow.state !== ShowWindowStates.hiddenWindow) return;
     try {
       const response = await fetch(
-        `${ENV.SERVER_DOMAIN}/api/email-verification`,
+        `${ENV.SERVER_DOMAIN}/api/contact/verification`,
         {
           method: "POST",
           headers: {
@@ -119,7 +119,11 @@ const Contact = () => {
       }
       setVerificationCodeWindow(data.verificationCode as string);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      updateShowWindowState({
+        state: ShowWindowStates.contactRequestFailed,
+        message: <>Something went wrong connecting to the server !</>,
+      });
     }
   }, [showWindow, inputs]);
 

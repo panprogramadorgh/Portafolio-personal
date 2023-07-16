@@ -10,7 +10,7 @@ import {
 } from "./Contact";
 import Card from "../generic/Card";
 import Button from "../generic/Button";
-import ENV from "../../env";
+import ENV from "../../../env";
 import "../../stylesheets/contact/VerificationCodeWindow.css";
 
 const VerificationCodeWindow = () => {
@@ -48,7 +48,7 @@ const VerificationCodeWindow = () => {
     // );
     if (inputValue === "12345") {
       try {
-        await fetch(`${ENV.SERVER_DOMAIN}/api/contact-request`, {
+        await fetch(`${ENV.SERVER_DOMAIN}/api/contact/request`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

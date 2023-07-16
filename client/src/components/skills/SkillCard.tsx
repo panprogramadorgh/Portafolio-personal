@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import Card from "../generic/Card";
 import { VscArrowRight } from "react-icons/vsc";
-import ENV from "../../env";
+import ENV from "../../../env";
 import "../../stylesheets/skills/SkillCard.css";
 
 export interface SkillCardProps {

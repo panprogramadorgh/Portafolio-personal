@@ -3,6 +3,7 @@ dotenv.config();
 import CryptoJS from "crypto-js";
 import { createVerificationCode, generateViewFromCode } from "../func/utils.js";
 import nodemailer from "nodemailer";
+import Contact from "../models/contact.model.js";
 import Skill from "../models/skill.model.js";
 import Project from "../models/project.model.js";
 import { Router } from "express";
@@ -79,7 +80,7 @@ indexRouter.post("/contact/verification", async (req, res) => {
       subject: "Contact request | Verification code",
       html: view,
     };
-    transporter.sendMail(nodemailerMessage);
+    await transporter.sendMail(nodemailerMessage);
 
     // respuesta de que todo salio bien
     res.status(200).json({
